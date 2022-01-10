@@ -30,74 +30,22 @@
         </svg>
       </button>
     </div>
-    <div id="tags" class="py-2">
-      <ul class="m-0 p-0 d-flex flex-row gap-2">
-        <li class="px-3 py-2 pe-5 badge tag bg-blue d-flex flex-row align-items-center">Coco</li>
-        <li class="px-3 py-2 pe-5 badge tag bg-green d-flex flex-row align-items-center">Farine</li>
-        <li class="px-3 py-2 pe-5 badge tag bg-red d-flex flex-row align-items-center">Farine</li>
-      </ul>
-    </div>
+    <div id="tags" data-wrapper="tags"></div>
     <div id="filters" class="py-2 container-fluid">
-      <div class="row flex-nowrap">
-        <div class="filter filter--active bg-blue rounded p-0 col-auto">
-          <input class="form-control border-0 bg-blue text-white py-3 px-4" type="text" name="" id="" placeholder="Ingredients" />
-          <ul class="row flex-wrap m-0 p-3 pt-0 list-unstyled text-white fs-6">
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-            <li class="filter__item col-sm-6 col-md-4">Lait de coco</li>
-          </ul>
+      <div class="row flex-nowrap align-items-start w-100">
+        <div class="filter bg-blue rounded p-0  me-3 col-auto" data-wrapper="filter-ingredients" data-label="Ingrédients" data-placeholder="Rechercher un ingrédient">
+          <input class="filter__input form-control border-0 bg-blue text-white py-3 px-4" type="text" name="" id="" placeholder="Ingredients" />
         </div>
-        <div class="filter col-auto">
-          <input class="form-control border-0 bg-green text-white py-3 px-4" type="text" name="" id="" placeholder="Appareils">
+        <div class="filter bg-green rounded p-0 me-3 col-auto" data-wrapper="filter-appliances" data-label="Appareils" data-placeholder="Rechercher un appareil">
+          <input class="filter__input form-control border-0 bg-green text-white py-3 px-4" type="text" name="" id="" placeholder="Appareils">
         </div>
-        <div class="filter col-auto">
-          <input class="form-control border-0 bg-red text-white py-3 px-4" type="text" name="" id="" placeholder="Ustensiles">
+        <div class="filter bg-red rounded p-0 me-3 col-auto" data-wrapper="filter-ustensils" data-label="Ustensiles" data-placeholder="Rechercher un ustensile">
+          <input class="filter__input form-control border-0 bg-red text-white py-3 px-4" type="text" name="" id="" placeholder="Ustensiles">
         </div>
       </div>
     </div>
   </header>
-  <main class="container-fluid px-4">
-    <ul class="row justify-content-between m-0 p-0 list-unstyled">
-
-      <li class="col-xl-4 col-md-6 col-sm-12 box px-4 p-0 mb-5">
-        <article class="card border-0 bg-light">
-          <img src="#" class="card-img-top" alt="Poulet coco réunionnais">
-          <div class="card-body">
-            <div class="d-flex flex-row mt-2 mb-4 justify-content-between gap-2 ">
-              <h2 class="card-title col">Poulet coco réunionnais</h2>
-              <div class="col-4 d-flex flex-row align-items-center justify-content-end">
-                <svg class="me-2" width="20" height="20">
-                  <use xlink:href="<%= require('./assets/clock.svg') %>#clock"/>
-                </svg>
-                <p class="card-subtitle">80 min</p>
-              </div>
-            </div>
-            <div class="d-flex flex-row justify-content-between gap-2">
-              <ul class="col-6">
-                <li><strong>Poulet:</strong> 1</li>
-                <li><strong>Lait de coco:</strong> 400ml</li>
-                <li><strong>Coulis de tomate:</strong> 25cl</li>
-                <li><strong>Oignon:</strong> 1</li>
-                <li><strong>Poivron rouge:</strong> 1</li>
-                <li><strong>Huile d'olive:</strong> 1</li>
-              </ul>
-              <p class="card-text col-6 m-0">Découper le poulet en morceaux, les faire dorer dans une cocotte avec de l'huile d'olive. Salez et poivrez. Une fois doré, laisser cuire en ajoutant de l'eau. Au bout de 30 minutes, ajouter le coulis de tomate, ...</p>
-            </div>
-          </div>
-        </article>
-      </li>
-
-    </ul>
-  </main>
+  <main id="receipts" class="container-fluid px-4" data-wrapper="receipts"></main>
   <% for (var chunk in htmlWebpackPlugin.files.js) { %>
     <script src="<%= htmlWebpackPlugin.files.js[chunk] %>"></script>
     <% } %>
