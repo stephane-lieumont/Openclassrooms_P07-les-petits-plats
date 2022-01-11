@@ -1,0 +1,81 @@
+
+.filter {
+  position: relative;  
+  flex:0 1 190px;
+  transition: flex .3s ease-in-out;
+  min-width: 56px;
+  max-width: 40%;
+
+  &::before {
+    content:"";
+    position:absolute;
+    height: 50px;
+    width: 50px;
+    padding:28px;  
+    top:0;
+    right:0;
+    background: url('../assets/arrow.svg') no-repeat center;
+    transition: transform .3s ease-in-out;
+    cursor: pointer;
+  }
+
+  &__input {
+    pointer-events: none;
+    text-overflow: ellipsis;
+    padding-right: 35px!important;
+
+    &::placeholder{
+      border: none;
+      color:$white;
+      font-weight: $font-weight-bold;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  &__result{
+    display: none;
+    transition: opacity .15s ease-in-out;
+    opacity: 0;
+
+    .no-result {
+      opacity: .5;
+      font-weight: $font-weight-bold;
+    }
+
+    li {
+      white-space: nowrap; 
+      overflow: hidden;
+      text-overflow: ellipsis;     
+    }
+  }
+
+  &--active {
+    flex:1 1 50%;
+
+    .filter__result {
+      opacity: 1;
+      display: flex;
+      max-height: 200px;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .filter__input {
+      pointer-events: all;
+
+      &::placeholder {
+        opacity: .5;
+      }
+    }
+
+    &::before {
+      transform: rotate(180deg);
+    }
+  }
+  &__item {
+    cursor: pointer;
+  }
+}

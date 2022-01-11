@@ -29,6 +29,13 @@ const config = {
         use: ['babel-loader']
       },
       {
+        test: /\.json$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'data/[name][ext]'
+        }
+      },
+      {
         test: /\.(svg|png|jpe?g|gif)(\?.*)?$/,
         type: 'asset/resource',
         generator: {
