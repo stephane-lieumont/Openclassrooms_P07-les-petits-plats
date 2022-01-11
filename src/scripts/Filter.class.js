@@ -47,7 +47,7 @@ export default class Filter {
     this.$wrapperFilter.dataset.label = this._label
     this.$wrapperFilter.dataset.placeholder = this._placeholder
 
-    this.$wrapperFilter.innerHTML = `<input class="filter__input form-control border-0 bg-${this._color} text-white py-3 px-4" type="text" name="" id="${this._label}" placeholder="${this._label}" />`
+    this.$wrapperFilter.innerHTML = `<input class="filter__input form-control border-0 bg-${this._color} text-white py-3 px-4" type="text" name="${formatString(this._label)}" id="${formatString(this._label)}" placeholder="${this._label}" />`
 
     this.$wrapperFilter.querySelector('input').addEventListener('input', this._searchFilter)
     this.$wrapperFilter.appendChild(this._createFilterResultHtml())
@@ -96,7 +96,7 @@ export default class Filter {
     const result = []
     // Rend visible les elements qui contiennent une partie de la chaine de caractères
     event.target.parentNode.querySelectorAll('.filter__item').forEach(item => {
-      if (formatString(item.innerHTML).includes(formatString(value.toLowerCase()))) {
+      if (formatString(item.innerHTML).includes(formatString(value))) {
         item.style.display = 'block'
         result.push(item)
       } else {
@@ -117,7 +117,7 @@ export default class Filter {
 
     let content = ''
     this._filterList.forEach(element => {
-      content += `<li class="filter__item col-sm-6 col-md-4" data-color="${this._color}" data-category="${this._label}">${element}</li>`
+      content += `<li class="filter__item col-sm-6 col-md-4" data-color="${this._color}" data-category="${formatString(this._label)}">${element}</li>`
     })
 
     this.$wrapperResultList.innerHTML = content

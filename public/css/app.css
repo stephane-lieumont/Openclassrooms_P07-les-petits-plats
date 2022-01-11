@@ -11398,6 +11398,12 @@ body {
   color: black;
 }
 
+.form-input:focus {
+  border-color: #D04F4F;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #D04F4F;
+  outline: 0 none;
+}
+
 #logo {
   font-family: "DM sans";
   fill: #D04F4F;
@@ -11410,7 +11416,7 @@ body {
 #search {
   position: relative;
 }
-#search input input:focus + .search-icon {
+#search input:focus + .search-icon {
   fill: #D04F4F;
 }
 #search .search-icon {
