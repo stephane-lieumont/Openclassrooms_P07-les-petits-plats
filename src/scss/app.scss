@@ -175,6 +175,11 @@ body {
     transition: opacity .15s ease-in-out;
     opacity: 0;
 
+    .no-result {
+      opacity: .5;
+      font-weight: $font-weight-bold;
+    }
+
     li {
       white-space: nowrap; 
       overflow: hidden;

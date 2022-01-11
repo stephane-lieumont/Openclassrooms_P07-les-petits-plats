@@ -11511,6 +11511,10 @@ body {
   transition: opacity 0.15s ease-in-out;
   opacity: 0;
 }
+.filter__result .no-result {
+  opacity: 0.5;
+  font-weight: 700;
+}
 .filter__result li {
   white-space: nowrap;
   overflow: hidden;

@@ -30,25 +30,19 @@
         </svg>
       </button>
     </div>
+
     <div id="tags" data-wrapper="tags"></div>
-    <div id="filters" class="py-2 container-fluid">
-      <div class="row flex-nowrap align-items-start w-100">
-        <div class="filter bg-blue rounded p-0  me-3 col-auto" data-wrapper="filter-ingredients" data-label="Ingrédients" data-placeholder="Rechercher un ingrédient">
-          <input class="filter__input form-control border-0 bg-blue text-white py-3 px-4" type="text" name="" id="" placeholder="Ingredients" />
-        </div>
-        <div class="filter bg-green rounded p-0 me-3 col-auto" data-wrapper="filter-appliances" data-label="Appareils" data-placeholder="Rechercher un appareil">
-          <input class="filter__input form-control border-0 bg-green text-white py-3 px-4" type="text" name="" id="" placeholder="Appareils">
-        </div>
-        <div class="filter bg-red rounded p-0 me-3 col-auto" data-wrapper="filter-ustensils" data-label="Ustensiles" data-placeholder="Rechercher un ustensile">
-          <input class="filter__input form-control border-0 bg-red text-white py-3 px-4" type="text" name="" id="" placeholder="Ustensiles">
-        </div>
-      </div>
+
+    <div id="filters" class="py-2 container-fluid" >      
+      <div class="row flex-nowrap align-items-start w-100" data-wrapper="filters"></div>       
     </div>
   </header>
-  <main id="receipts" class="container-fluid px-4" data-wrapper="receipts"></main>
+  <main id="receipts" class="container-fluid px-4" data-wrapper="receipts">
+    
+  </main>
   <% for (var chunk in htmlWebpackPlugin.files.js) { %>
     <script src="<%= htmlWebpackPlugin.files.js[chunk] %>"></script>
-    <% } %>
+  <% } %>
 </body>
 
 </html>

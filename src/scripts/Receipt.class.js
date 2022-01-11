@@ -1,27 +1,91 @@
 import clockAsset from '../assets/clock.svg'
 
-export default class Receipt {
-  constructor (data) {
-    this._id = data.id
-    this._name = data.name
-    this._description = data.description
-    this._appliance = data.appliance
-    this._servings = data.servings
-    this._time = data.time
-
-    this._ustensils = data.ustensils
-    this._ingredients = data.ingredients
+export default class ReceiptsList {
+  constructor () {
+    this.$wrapperReceipts = document.querySelector('[data-wrapper="receipts"]')
+    this._receiptsList = []
+    this._listIngredients = []
+    this._listAppliances = []
+    this._listUstensils = []
   }
 
-  get id () { return this._id }
-  get name () { return this._name }
-  get description () { return this._description }
-  get appliance () { return this._appliance }
-  get servings () { return this._servings }
-  get time () { return this._time }
-  get ingredients () { return this._ingredients }
-  get ustensils () { return this._ustensils }
+  /** GETTERS */
+  get receiptsList () {
+    return this._receiptsList
+  }
 
+  get ingredients () {
+    return this._listIngredients
+  }
+
+  get appliances () {
+    return this._listAppliances
+  }
+
+  get ustensils () {
+    return this._listUstensils
+  }
+
+  /**
+   * @param {ObjectJSON} data
+   */
+  createHTMLContent (data) {
+    const $listReceipts = document.createElement('ul')
+    $listReceipts.classList.add('row', 'justify-content-start', 'm-0', 'p-0', 'list-unstyled')
+
+    data.forEach(item => {
+      // Creation de l'objet recette et initialisation des tableau de données
+      const receipt = new Receipt(item)
+      this._receiptsList.push(receipt)
+      this._listAppliances.push(receipt.appliance)
+      this._listUstensils = this._listUstensils.concat(receipt.ustensils)
+      this._listIngredients = this._listIngredients.concat(receipt.ingredients)
+      $listReceipts.append(receipt.createHTMLComponent())
+    })
+
+    // suppression des doublons
+    this._listAppliances = Array.from(new Set(this._listAppliances))
+    this._listUstensils = Array.from(new Set(this._listUstensils))
+    this._listIngredients = Array.from(new Set(this._listIngredients))
+
+    // Affichage de la liste des recettes
+    this.$wrapperReceipts.append($listReceipts)
+  }
+}
+
+class Receipt {
+  /**
+   * @param {ObjectJSON} itemData
+   */
+  constructor (itemData) {
+    this._id = itemData.id
+    this._name = itemData.name
+    this._servings = itemData.servings
+    this._time = itemData.time
+
+    this._description = itemData.description
+    this._ustensils = itemData.ustensils
+    this._ingredients = itemData.ingredients
+    this._appliance = itemData.appliance
+  }
+
+  /* GETTERS */
+  get ingredients () { // retourne seulement un tableau d'ingrédients
+    const lisIngredients = []
+    this._ingredients.forEach(item => {
+      lisIngredients.push(item.ingredient)
+    })
+
+    return lisIngredients
+  }
+
+  get appliance () { return this._appliance }
+  get ustensils () { return this._ustensils }
+  get description () { return this._description }
+
+  /**
+   * @returns {HTMLElement}
+   */
   createHTMLComponent () {
     const $wrapper = document.createElement('li')
     $wrapper.classList.add('col-xl-4', 'col-md-6', 'col-sm-12', 'box', 'px-4', 'p-0', 'mb-5')
@@ -52,6 +116,9 @@ export default class Receipt {
     return $wrapper
   }
 
+  /**
+   * @returns {HTMLElement}
+   */
   _createHTMLIngredients () {
     const $wrapper = document.createElement('ul')
     $wrapper.classList.add('col-6')
