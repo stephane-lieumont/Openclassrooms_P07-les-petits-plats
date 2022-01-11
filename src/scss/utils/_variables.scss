@@ -1,0 +1,37 @@
+// CUSTOM FONT BOOTSTRAP
+$font-family-base: 'Lato';
+$font-size-base: 1.2rem;
+
+// CUSTOM COLORS BOOTSTRAP
+
+$primary: #D04F4F;
+$secondary: #000;
+$light: #E7E7E7;
+$blue: #3282F7;
+$green: #68D9A4;
+$red: #ED6454;
+
+$custom-colors: (
+  "primary":$primary,
+  "secondary": $secondary,
+  "light": $light,
+  "blue": $blue,
+  "green": $green,
+  "red": $red
+);
+
+$utilities-bg: map-merge(
+  $utilities-colors,
+  (
+    "blue": to-rgb($blue),
+    "green": to-rgb($green),
+    "red": to-rgb($red)
+  )
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+$theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
+$utilities-bg-colors: map-loop($utilities-bg, rgba-css-var, "$key", "bg");
+
+// CUSTOM COMPONENTS BOOTSTRAP
+$card-border-width:0;

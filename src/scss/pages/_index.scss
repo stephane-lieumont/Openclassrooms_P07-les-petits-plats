@@ -1,0 +1,28 @@
+#logo {
+  font-family: 'DM sans';
+  fill:$primary;
+  flex-direction: column;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#search {
+  position: relative;
+
+  input
+
+  input:focus + .search-icon{
+    fill:$primary;
+  }
+
+  .search-icon {
+    position: absolute;
+    top:50%;
+    right: 15px;
+    transform: translateY(-50%);
+    border: 0;
+    background: $light;
+    cursor: pointer;
+  }
+}

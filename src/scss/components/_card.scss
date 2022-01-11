@@ -1,0 +1,59 @@
+
+.card {
+  overflow:hidden;
+  height: 100%;
+
+  &-title{
+    font-size: 1.3rem;
+    margin: 0;
+  }
+
+  &-text{
+    height:135px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &-subtitle{
+    font-size: 1.3rem!important;
+    font-weight: $font-weight-bold;
+    white-space: nowrap;
+    margin:0;
+  }
+
+  ul {
+    list-style: none;
+    padding:0;
+  }
+
+  &-img-top {
+    height:178px;
+    background-color: #C7BEBE;
+  }
+
+  &-body{    
+    padding:30px;
+    padding-top:10px;
+    overflow: hidden;
+  }
+
+  font-size: 0.8rem;
+}
+
+.tag{
+  position: relative;
+
+  &::before {    
+    content:"";
+    position:absolute;
+    height: 20px;
+    width: 20px;  
+    top:5px;
+    right:8px;
+    background: url('../assets/close.svg') no-repeat center;  
+  }
+}
