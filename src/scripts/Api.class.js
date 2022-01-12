@@ -4,7 +4,7 @@ export default class API {
   }
 
   /**
-   * requete API simulation avec getPhotographers
+   * Simulate Request for receipt datas
    * @returns {Promise}
    */
   async getAllReceipts () {

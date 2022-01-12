@@ -2,13 +2,17 @@ import clockAsset from '../assets/clock.svg'
 import { formatString } from './utils'
 
 export class ReceiptsList {
-  constructor () {
+  constructor (data) {
+    this._data = data
+
     this.$wrapperReceipts = document.querySelector('[data-wrapper="receipts"]')
 
     this._receiptsList = []
     this._listIngredients = []
     this._listAppliances = []
     this._listUstensils = []
+
+    this._initReceiptsObjects()
   }
 
   /** GETTERS */
@@ -29,53 +33,44 @@ export class ReceiptsList {
   }
 
   /**
-   * @param {ObjectJSON} data
+   * @param {Receipt[]} arrayReceipts
    */
-  createHTMLContent (data) {
-    this.$listReceipts = this.createHTMLContainer()
+  createHTMLContent (arrayReceipts = this._receiptsList) {
+    if (this.$wrapperReceipts.querySelector('#result')) this.$wrapperReceipts.querySelector('#result').remove()
 
-    data.forEach(item => {
-      // Creation de l'objet recette et initialisation des tableau de données
+    if (arrayReceipts.length === 0) {
+      this.$wrapperReceipts.innerHTML = '<p id="result" class="m-4 text-secondary">Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>'
+    } else {
+      const $wrapper = this.createHTMLContainer()
+      arrayReceipts.forEach(receipt => $wrapper.append(receipt.createHTMLComponent()))
+      this.$wrapperReceipts.append($wrapper)
+    }
+  }
+
+  /**
+   * @returns {HTMLElement}
+   */
+  createHTMLContainer () {
+    const $node = document.createElement('ul')
+    $node.classList.add('row', 'justify-content-start', 'm-0', 'p-0', 'list-unstyled')
+    $node.id = 'result'
+
+    return $node
+  }
+
+  _initReceiptsObjects () {
+    this._data.forEach(item => {
       const receipt = new Receipt(item)
       this._receiptsList.push(receipt)
       this._listAppliances.push(receipt.appliance)
       this._listUstensils = this._listUstensils.concat(receipt.ustensils)
       this._listIngredients = this._listIngredients.concat(receipt.ingredients)
-      this.$listReceipts.append(receipt.createHTMLComponent())
     })
 
     // suppression des doublons
-    this._listAppliances = Array.from(new Set(this._listAppliances))
-    this._listUstensils = Array.from(new Set(this._listUstensils))
-    this._listIngredients = Array.from(new Set(this._listIngredients))
-
-    // Affichage de la liste des recettes
-    this.$wrapperReceipts.append(this.$listReceipts)
-  }
-
-  createHTMLContainer () {
-    const $node = document.createElement('ul')
-    $node.classList.add('row', 'justify-content-start', 'm-0', 'p-0', 'list-unstyled')
-
-    return $node
-  }
-
-  /**
-   * @param {Receipt[]} array
-   */
-  updateHTMLContent (listReceipts) {
-    this.$listReceipts.remove()
-
-    if (listReceipts.length > 0) {
-      this.$listReceipts = this.createHTMLContainer()
-      listReceipts.forEach(item => {
-        this.$listReceipts.append(item.createHTMLComponent())
-      })
-    } else {
-      this.$listReceipts.innerHTML = '<p class="m-3 text-secondary">Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>'
-    }
-
-    this.$wrapperReceipts.append(this.$listReceipts)
+    this._listAppliances = [...new Set(this._listAppliances)]
+    this._listUstensils = [...new Set(this._listUstensils)]
+    this._listIngredients = [...new Set(this._listIngredients)]
   }
 }
 
@@ -96,26 +91,46 @@ export class Receipt {
   }
 
   /* GETTERS */
-  get name () { return this._name }
-  get appliance () { return this._appliance }
-  get ustensils () { return this._ustensils }
-  get description () { return this._description }
-
-  get keywordsIngredients () {
-    return formatString(this.ingredients.join('+')).split('+')
+  get name () {
+    return this._name
   }
 
-  get keywordsUstensils () {
-    return formatString(this._ustensils.join('+')).split('+')
+  get appliance () {
+    return this._appliance
   }
 
-  get ingredients () { // retourne seulement un tableau d'ingrédients
+  get ustensils () {
+    return this._ustensils
+  }
+
+  get description () {
+    return this._description
+  }
+
+  /**
+   * @return {Array} with strings ingredients
+   */
+  get ingredients () {
     const lisIngredients = []
     this._ingredients.forEach(item => {
       lisIngredients.push(item.ingredient)
     })
 
     return lisIngredients
+  }
+
+  /**
+   * @return {String} format string for keywords research
+   */
+  get keywordsIngredients () {
+    return formatString(this.ingredients.join('+')).split('+')
+  }
+
+  /**
+   * @return {String} format string for keywords research
+   */
+  get keywordsUstensils () {
+    return formatString(this._ustensils.join('+')).split('+')
   }
 
   /**

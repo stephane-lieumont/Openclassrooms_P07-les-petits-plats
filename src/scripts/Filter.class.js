@@ -1,27 +1,28 @@
 import { formatString } from './utils'
 
+/**
+ * @property {HTMLElement} filterHTMLComponent
+ */
 export default class Filter {
   /**
    * @param {String} label
    * @param {String} category
    * @param {String} placeholder
    * @param {String} color
+   * @param {Array} items list items injected on advanced filter
    */
-  constructor (label, category, placeholder, color) {
-    this.$wrapperFiltersList = document.querySelector('[data-wrapper="filters"]')
-    this.$wrapperResultList = null
-    this.$wrapperFilter = null
-
-    this.$wrapperNoResult = document.createElement('li')
-    this.$wrapperNoResult.classList.add('no-result')
-    this.$wrapperNoResult.innerHTML = 'Aucun Résultats'
-
+  constructor (label, category, placeholder, color, items) {
     this._label = label
     this._category = category
     this._placeholder = placeholder
     this._color = color
+    this._items = items
 
-    // Conserve le context du Filter
+    this.$wrapperFiltersList = document.querySelector('[data-wrapper="filters"]')
+    this.$wrapperFilter = null
+    this.$wrapperNoResult = this._createNoResultHTML()
+
+    // Bind private functions to keep context
     this.expandFilter = this.expandFilter.bind(this)
     this.openFilter = this.openFilter.bind(this)
     this.closeFilter = this.closeFilter.bind(this)
@@ -33,43 +34,38 @@ export default class Filter {
     return this.$wrapperFilter
   }
 
-  get filterHTMLResult () {
-    return this.$wrapperResultList
-  }
-
-  /**
-   * @param {Array} array
-   */
-  createFilterHtml (items) {
+  createFilterHtml () {
     this.$wrapperFilter = document.createElement('div')
     this.$wrapperFilter.classList.add('filter', `bg-${this._color}`, 'rounded', 'p-0', 'me-3', 'col-auto')
     this.$wrapperFilter.dataset.label = this._label
     this.$wrapperFilter.dataset.placeholder = this._placeholder
-
     this.$wrapperFilter.innerHTML = `<input class="filter__input form-control border-0 bg-${this._color} text-white py-3 px-4" type="text" name="${formatString(this._label)}" id="${formatString(this._label)}" placeholder="${this._label}" />`
+    this.updateFilterResultHtml(this._items)
 
     this.$wrapperFilter.querySelector('input').addEventListener('input', this._searchFilter)
-    this.updateFilterResultHtml(items)
 
     this.$wrapperFiltersList.appendChild(this.$wrapperFilter)
   }
 
+  /**
+   * @param {Array} items
+   * @returns {HTMLElement}
+   */
   updateFilterResultHtml (items) {
-    if (this.$wrapperResultList) {
-      this.$wrapperResultList.remove()
-    }
+    this._items = items
 
-    this.$wrapperResultList = document.createElement('ul')
-    this.$wrapperResultList.classList.add('row', 'filter__result', 'flex-wrap', 'm-0', 'p-3', 'pt-0', 'list-unstyled', 'text-white', 'fs-6')
+    const $wrapper = document.createElement('ul')
+    $wrapper.classList.add('row', 'filter__result', 'flex-wrap', 'm-0', 'p-3', 'pt-0', 'list-unstyled', 'text-white', 'fs-6')
 
     let content = ''
-    items.forEach(element => {
+    this._items.forEach(element => {
       content += `<li class="filter__item col-sm-6 col-md-4" data-color="${this._color}" data-category="${this._category}">${element}</li>`
     })
 
-    this.$wrapperResultList.innerHTML = content
+    $wrapper.innerHTML = content
 
-    this.$wrapperFilter.appendChild(this.$wrapperResultList)
+    if (this.$wrapperFilter.querySelector('ul')) this.$wrapperFilter.querySelector('ul').remove()
+    this.$wrapperFilter.appendChild($wrapper)
   }
 
   /**
@@ -98,7 +94,7 @@ export default class Filter {
       this.$wrapperFilter.querySelector('input').value = ''
 
       // reinit la list des resultats
-      this.$wrapperResultList.querySelectorAll('.filter__item').forEach(item => {
+      this.$wrapperFilter.querySelectorAll('.filter__item').forEach(item => {
         item.style.display = 'block'
       })
       this.$wrapperNoResult.remove()
@@ -122,9 +118,20 @@ export default class Filter {
     })
 
     if (result.length === 0) {
-      this.$wrapperResultList.appendChild(this.$wrapperNoResult)
+      this.$wrapperFilter.appendChild(this.$wrapperNoResult)
     } else if (this.$wrapperNoResult) {
       this.$wrapperNoResult.remove()
     }
+  }
+
+  /**
+   * @returns {HTMLElement}
+   */
+  _createNoResultHTML () {
+    const $node = document.createElement('p')
+    $node.classList.add('filter__result', 'no-result', 'm-0', 'p-3', 'pt-0', 'text-white', 'fs-6')
+    $node.innerHTML = 'Aucun résultat'
+
+    return $node
   }
 }

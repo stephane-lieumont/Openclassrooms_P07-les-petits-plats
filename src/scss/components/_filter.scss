@@ -39,17 +39,17 @@
     display: none;
     transition: opacity .15s ease-in-out;
     opacity: 0;
-
-    .no-result {
-      opacity: .5;
-      font-weight: $font-weight-bold;
-    }
-
+    
     li {
       white-space: nowrap; 
       overflow: hidden;
       text-overflow: ellipsis;     
     }
+  }
+
+  .no-result {
+    opacity: .5!important;
+    font-weight: $font-weight-bold!important;
   }
 
   &--active {

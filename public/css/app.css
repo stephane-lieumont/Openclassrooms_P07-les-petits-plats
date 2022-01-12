@@ -11427,6 +11427,10 @@ body {
   transform: translateY(-50%);
 }
 
+p#result {
+  opacity: 0.5;
+}
+
 .card {
   overflow: hidden;
   height: 100%;
@@ -11516,14 +11520,14 @@ body {
   transition: opacity 0.15s ease-in-out;
   opacity: 0;
 }
-.filter__result .no-result {
-  opacity: 0.5;
-  font-weight: 700;
-}
 .filter__result li {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.filter .no-result {
+  opacity: 0.5 !important;
+  font-weight: 700 !important;
 }
 .filter--active {
   flex: 1 1 50%;
