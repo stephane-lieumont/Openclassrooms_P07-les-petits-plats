@@ -3,10 +3,11 @@ import { formatString } from './utils'
 export default class Filter {
   /**
    * @param {String} label
+   * @param {String} category
    * @param {String} placeholder
    * @param {String} color
    */
-  constructor (label, placeholder, color) {
+  constructor (label, category, placeholder, color) {
     this.$wrapperFiltersList = document.querySelector('[data-wrapper="filters"]')
     this.$wrapperResultList = null
     this.$wrapperFilter = null
@@ -16,9 +17,9 @@ export default class Filter {
     this.$wrapperNoResult.innerHTML = 'Aucun Résultats'
 
     this._label = label
+    this._category = category
     this._placeholder = placeholder
     this._color = color
-    this._filterList = []
 
     // Conserve le context du Filter
     this.expandFilter = this.expandFilter.bind(this)
@@ -39,9 +40,7 @@ export default class Filter {
   /**
    * @param {Array} array
    */
-  createFilterHtml (array) {
-    this._filterList = array
-
+  createFilterHtml (items) {
     this.$wrapperFilter = document.createElement('div')
     this.$wrapperFilter.classList.add('filter', `bg-${this._color}`, 'rounded', 'p-0', 'me-3', 'col-auto')
     this.$wrapperFilter.dataset.label = this._label
@@ -50,9 +49,27 @@ export default class Filter {
     this.$wrapperFilter.innerHTML = `<input class="filter__input form-control border-0 bg-${this._color} text-white py-3 px-4" type="text" name="${formatString(this._label)}" id="${formatString(this._label)}" placeholder="${this._label}" />`
 
     this.$wrapperFilter.querySelector('input').addEventListener('input', this._searchFilter)
-    this.$wrapperFilter.appendChild(this._createFilterResultHtml())
+    this.updateFilterResultHtml(items)
 
     this.$wrapperFiltersList.appendChild(this.$wrapperFilter)
+  }
+
+  updateFilterResultHtml (items) {
+    if (this.$wrapperResultList) {
+      this.$wrapperResultList.remove()
+    }
+
+    this.$wrapperResultList = document.createElement('ul')
+    this.$wrapperResultList.classList.add('row', 'filter__result', 'flex-wrap', 'm-0', 'p-3', 'pt-0', 'list-unstyled', 'text-white', 'fs-6')
+
+    let content = ''
+    items.forEach(element => {
+      content += `<li class="filter__item col-sm-6 col-md-4" data-color="${this._color}" data-category="${this._category}">${element}</li>`
+    })
+
+    this.$wrapperResultList.innerHTML = content
+
+    this.$wrapperFilter.appendChild(this.$wrapperResultList)
   }
 
   /**
@@ -109,19 +126,5 @@ export default class Filter {
     } else if (this.$wrapperNoResult) {
       this.$wrapperNoResult.remove()
     }
-  }
-
-  _createFilterResultHtml () {
-    this.$wrapperResultList = document.createElement('ul')
-    this.$wrapperResultList.classList.add('row', 'filter__result', 'flex-wrap', 'm-0', 'p-3', 'pt-0', 'list-unstyled', 'text-white', 'fs-6')
-
-    let content = ''
-    this._filterList.forEach(element => {
-      content += `<li class="filter__item col-sm-6 col-md-4" data-color="${this._color}" data-category="${formatString(this._label)}">${element}</li>`
-    })
-
-    this.$wrapperResultList.innerHTML = content
-
-    return this.$wrapperResultList
   }
 }

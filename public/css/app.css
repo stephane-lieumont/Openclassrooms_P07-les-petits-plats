@@ -11420,13 +11420,11 @@ body {
   fill: #D04F4F;
 }
 #search .search-icon {
+  content: "";
   position: absolute;
   top: 50%;
   right: 15px;
   transform: translateY(-50%);
-  border: 0;
-  background: #E7E7E7;
-  cursor: pointer;
 }
 
 .card {
@@ -11469,6 +11467,7 @@ body {
 
 .tag {
   position: relative;
+  cursor: pointer;
 }
 .tag::before {
   content: "";

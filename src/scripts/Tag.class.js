@@ -23,21 +23,25 @@ export default class Tag {
     if (!this.$listTagsHtml) {
       this.$wrapperTags.appendChild(this.createTagsListHtml())
     }
-    this.$listTagsHtml.appendChild(this.createTagHtml(target))
+    const $wrapper = this.createTagHtml(target)
+    this.$listTagsHtml.appendChild($wrapper)
+
+    return $wrapper
   }
 
   /**
    * @param {EventListenerObject} event
    */
-  removeTag (event) {
+  removeTag (target) {
     // Supprime element tableau objet tag
-    this._listTags = this._listTags.filter(item => !(item.value === event.target.innerHTML && item.category === event.target.dataset.category))
+    this._listTags = this._listTags.filter(item => !(item.value === target.innerHTML && item.category === target.dataset.category))
 
     // DOM
     if (this._listTags.length === 0) {
       this.$listTagsHtml.remove()
+      this.$listTagsHtml = null
     }
-    event.target.remove()
+    target.remove()
   }
 
   createTagsListHtml () {
@@ -54,7 +58,6 @@ export default class Tag {
     tag.classList.add('tags__item', 'mb-2', 'me-2', 'px-3', 'py-2', 'pe-5', 'badge', 'tag', `bg-${tagColor}`, 'd-flex', 'flex-row', 'align-items-center')
     tag.innerHTML = target.innerHTML
     tag.dataset.category = target.dataset.category
-    tag.addEventListener('click', this.removeTag)
 
     return tag
   }
