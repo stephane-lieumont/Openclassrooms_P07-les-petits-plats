@@ -85,6 +85,21 @@
   }
 }
 
+.tag{
+  position: relative;
+  cursor: pointer;
+
+  &::before {    
+    content:"";
+    position:absolute;
+    height: 20px;
+    width: 20px;  
+    top:5px;
+    right:8px;
+    background: url('../assets/close.svg') no-repeat center;  
+  }
+}
+
 .tags__item {
   animation: pop-tag .3s ease-in-out forwards;
 }

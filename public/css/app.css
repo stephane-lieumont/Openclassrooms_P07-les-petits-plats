@@ -11627,20 +11627,6 @@ p#result {
   overflow: hidden;
 }
 
-.tag {
-  position: relative;
-  cursor: pointer;
-}
-.tag::before {
-  content: "";
-  position: absolute;
-  height: 20px;
-  width: 20px;
-  top: 5px;
-  right: 8px;
-  background: url(/public/assets/close.svg) no-repeat center;
-}
-
 @keyframes pop-card {
   0% {
     transform: scale(0.99);
@@ -11723,6 +11709,20 @@ p#result {
 }
 .filter__item {
   cursor: pointer;
+}
+
+.tag {
+  position: relative;
+  cursor: pointer;
+}
+.tag::before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  top: 5px;
+  right: 8px;
+  background: url(/public/assets/close.svg) no-repeat center;
 }
 
 .tags__item {

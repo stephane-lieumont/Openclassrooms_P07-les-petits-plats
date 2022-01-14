@@ -62,7 +62,9 @@ export default class Search {
   search () {
     const inputKeywordsTab = formatString(this.$searchInput.value.replace(/\s+/g, '+')).split('+')
     let result = []
-
+    // ======================================/
+    // Search_feature V1 Input Research
+    // ======================================/
     if (this.$searchInput.value.length >= 3) {
       result = result.concat(this._searchByTitle(inputKeywordsTab, this._receipts.receiptsList)) // keyword full string
       result = result.concat(this._searchByDescription(inputKeywordsTab, this._receipts.receiptsList)) // keyword full string
@@ -73,7 +75,7 @@ export default class Search {
       result = this._receipts.receiptsList
     }
     // ======================================/
-    // Search_feature V1
+    // Search_feature V1 Tag Research
     // ======================================/
     for (const tag of this._tag.listTags) {
       const keyword = [formatString(tag.value)]

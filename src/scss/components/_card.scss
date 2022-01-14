@@ -52,21 +52,6 @@
   font-size: 0.8rem;
 }
 
-.tag{
-  position: relative;
-  cursor: pointer;
-
-  &::before {    
-    content:"";
-    position:absolute;
-    height: 20px;
-    width: 20px;  
-    top:5px;
-    right:8px;
-    background: url('../assets/close.svg') no-repeat center;  
-  }
-}
-
 @keyframes pop-card {
   0% {
     transform: scale(0.99);
