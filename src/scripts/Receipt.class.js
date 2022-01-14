@@ -1,12 +1,18 @@
 import clockAsset from '../assets/clock.svg'
+import { formatString } from './utils'
 
-export default class ReceiptsList {
-  constructor () {
+export class ReceiptsList {
+  constructor (data) {
+    this._data = data
+
     this.$wrapperReceipts = document.querySelector('[data-wrapper="receipts"]')
+
     this._receiptsList = []
     this._listIngredients = []
     this._listAppliances = []
     this._listUstensils = []
+
+    this._initReceiptsObjects()
   }
 
   /** GETTERS */
@@ -27,33 +33,52 @@ export default class ReceiptsList {
   }
 
   /**
-   * @param {ObjectJSON} data
+   * @param {Receipt[]} arrayReceipts
    */
-  createHTMLContent (data) {
-    const $listReceipts = document.createElement('ul')
-    $listReceipts.classList.add('row', 'justify-content-start', 'm-0', 'p-0', 'list-unstyled')
+  createHTMLContent (arrayReceipts = this._receiptsList) {
+    if (this.$wrapperReceipts.querySelector('#result')) this.$wrapperReceipts.querySelector('#result').remove()
 
-    data.forEach(item => {
-      // Creation de l'objet recette et initialisation des tableau de données
+    if (arrayReceipts.length === 0) {
+      this.$wrapperReceipts.innerHTML = '<p id="result" class="m-4 text-secondary">Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>'
+    } else {
+      const $wrapper = this.createHTMLContainer()
+      let i = 0
+      arrayReceipts.forEach(receipt => {
+        $wrapper.append(receipt.createHTMLComponent(i))
+        i++
+      })
+      this.$wrapperReceipts.append($wrapper)
+    }
+  }
+
+  /**
+   * @returns {HTMLElement}
+   */
+  createHTMLContainer () {
+    const $node = document.createElement('ul')
+    $node.classList.add('row', 'justify-content-start', 'm-0', 'p-0', 'list-unstyled')
+    $node.id = 'result'
+
+    return $node
+  }
+
+  _initReceiptsObjects () {
+    this._data.forEach(item => {
       const receipt = new Receipt(item)
       this._receiptsList.push(receipt)
       this._listAppliances.push(receipt.appliance)
       this._listUstensils = this._listUstensils.concat(receipt.ustensils)
       this._listIngredients = this._listIngredients.concat(receipt.ingredients)
-      $listReceipts.append(receipt.createHTMLComponent())
     })
 
     // suppression des doublons
-    this._listAppliances = Array.from(new Set(this._listAppliances))
-    this._listUstensils = Array.from(new Set(this._listUstensils))
-    this._listIngredients = Array.from(new Set(this._listIngredients))
-
-    // Affichage de la liste des recettes
-    this.$wrapperReceipts.append($listReceipts)
+    this._listAppliances = [...new Set(this._listAppliances)]
+    this._listUstensils = [...new Set(this._listUstensils)]
+    this._listIngredients = [...new Set(this._listIngredients)]
   }
 }
 
-class Receipt {
+export class Receipt {
   /**
    * @param {ObjectJSON} itemData
    */
@@ -70,7 +95,26 @@ class Receipt {
   }
 
   /* GETTERS */
-  get ingredients () { // retourne seulement un tableau d'ingrédients
+  get name () {
+    return this._name
+  }
+
+  get appliance () {
+    return this._appliance
+  }
+
+  get ustensils () {
+    return this._ustensils
+  }
+
+  get description () {
+    return this._description
+  }
+
+  /**
+   * @return {Array} with strings ingredients
+   */
+  get ingredients () {
     const lisIngredients = []
     this._ingredients.forEach(item => {
       lisIngredients.push(item.ingredient)
@@ -79,28 +123,39 @@ class Receipt {
     return lisIngredients
   }
 
-  get appliance () { return this._appliance }
-  get ustensils () { return this._ustensils }
-  get description () { return this._description }
+  /**
+   * @return {String} format string for keywords research
+   */
+  get keywordsIngredients () {
+    return formatString(this.ingredients.join('+')).split('+')
+  }
 
   /**
+   * @return {String} format string for keywords research
+   */
+  get keywordsUstensils () {
+    return formatString(this._ustensils.join('+')).split('+')
+  }
+
+  /**
+   * @param {Number} iteration
    * @returns {HTMLElement}
    */
-  createHTMLComponent () {
+  createHTMLComponent (iteration) {
     const $wrapper = document.createElement('li')
     $wrapper.classList.add('col-xl-4', 'col-md-6', 'col-sm-12', 'box', 'px-4', 'p-0', 'mb-5')
 
     const content = `
-      <article class="card border-0 bg-light">
+      <article tabindex="0" class="card card--reveal${iteration} border-0 bg-light">
         <div class="card-img-top"></div>
-        <div class="card-body">
+        <div class="card-body" tabindex="0">
           <div class="d-flex flex-row mt-2 mb-4 justify-content-between gap-2 ">
             <h2 class="card-title col">${this._name}</h2>
             <div class="col-4 d-flex flex-row align-items-center justify-content-end">
               <svg class="me-2" width="20" height="20">
                 <use xlink:href="${clockAsset}#clock"/>
               </svg>
-              <p class="card-subtitle">${this._time} min</p>
+              <h3 class="card-subtitle">${this._time} min</h3>
             </div>
           </div>
           <div class="ingredients d-flex flex-row justify-content-between gap-2">

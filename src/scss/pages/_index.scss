@@ -10,19 +10,19 @@
 #search {
   position: relative;
 
-  input
-
   input:focus + .search-icon{
     fill:$primary;
   }
 
   .search-icon {
+    content:"";
     position: absolute;
     top:50%;
     right: 15px;
     transform: translateY(-50%);
-    border: 0;
-    background: $light;
-    cursor: pointer;
   }
+}
+
+p#result {
+  opacity: 0.5;
 }

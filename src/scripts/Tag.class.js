@@ -1,61 +1,100 @@
+/**
+ * @property {Array} listTags
+ */
 export default class Tag {
   constructor () {
-    this.$wrapperTags = document.querySelector('[data-wrapper="tags"]')
-    this.$listTagsHtml = null
-
     this._listTags = []
 
+    // HTML DOM
+    this.$wrapperTags = document.querySelector('[data-wrapper="tags"]')
+
+    // Bind private functions to keep context
+    this.addTag = this.addTag.bind(this)
     this.removeTag = this.removeTag.bind(this)
+    this.ariaControlInit = this.ariaControlInit.bind(this)
   }
 
+  /** GETTERS */
   get listTags () {
     return this._listTags
   }
 
   /**
    * @param {HTMLElement} target
+   * @return {HTMLElement}
    */
   addTag (target) {
-    // Ajout element tableau objet tag
+    // add Tag Element on TagList
     this._listTags.push({ value: target.innerHTML, category: target.dataset.category })
 
     // DOM
-    if (!this.$listTagsHtml) {
-      this.$wrapperTags.appendChild(this.createTagsListHtml())
+    const $wrapper = this._createTagHtmlContent(target)
+    let $wrapperContainer
+
+    if (!this.$wrapperTags.querySelector('ul')) {
+      $wrapperContainer = this._createTagsHtmlContainer()
+      this.$wrapperTags.appendChild($wrapperContainer)
+    } else {
+      $wrapperContainer = this.$wrapperTags.querySelector('ul')
     }
-    this.$listTagsHtml.appendChild(this.createTagHtml(target))
+
+    $wrapperContainer.appendChild($wrapper)
+
+    return $wrapper
   }
 
   /**
-   * @param {EventListenerObject} event
+   * @param {HTMLElement} target
    */
-  removeTag (event) {
-    // Supprime element tableau objet tag
-    this._listTags = this._listTags.filter(item => !(item.value === event.target.innerHTML && item.category === event.target.dataset.category))
+  removeTag (target) {
+    // Delete Tag Element on TagList
+    this._listTags = this._listTags.filter(item => !(item.value === target.innerHTML && item.category === target.dataset.category))
 
     // DOM
     if (this._listTags.length === 0) {
-      this.$listTagsHtml.remove()
+      this.$wrapperTags.querySelector('ul').remove()
     }
-    event.target.remove()
+    target.remove()
   }
 
-  createTagsListHtml () {
-    this.$listTagsHtml = document.createElement('ul')
-    this.$listTagsHtml.classList.add('m-0', 'p-0', 'd-flex', 'flex-row', 'flex-wrap')
-    this.$listTagsHtml.id = 'tags__list'
-
-    return this.$listTagsHtml
+  /**
+   * Keyboard control for filters
+   * @param {Function} callback
+   */
+  ariaControlInit (callback) {
+    this.$wrapperTags.addEventListener('keydown', event => {
+      if (event.key === 'Enter' && document.activeElement.classList.contains('tags__item')) {
+        event.preventDefault()
+        callback(event)
+      }
+    })
   }
 
-  createTagHtml (target) {
+  /**
+   * PRIVATE : Container list Tags
+   * @returns {HTMLElement}
+   */
+  _createTagsHtmlContainer () {
+    const $wrapper = document.createElement('ul')
+    $wrapper.classList.add('m-0', 'p-0', 'd-flex', 'flex-row', 'flex-wrap')
+    $wrapper.id = 'tags__list'
+
+    return $wrapper
+  }
+
+  /**
+   * PRIVATE : Tag HTML Component
+   * @param {HTMLElement} target
+   * @returns {HTMLElement}
+   */
+  _createTagHtmlContent (target) {
     const tagColor = target.dataset.color
-    const tag = document.createElement('li')
-    tag.classList.add('tags__item', 'mb-2', 'me-2', 'px-3', 'py-2', 'pe-5', 'badge', 'tag', `bg-${tagColor}`, 'd-flex', 'flex-row', 'align-items-center')
-    tag.innerHTML = target.innerHTML
-    tag.dataset.category = target.dataset.category
-    tag.addEventListener('click', this.removeTag)
+    const $wrapper = document.createElement('li')
+    $wrapper.classList.add('tags__item', 'mb-2', 'me-2', 'px-3', 'py-2', 'pe-5', 'badge', 'tag', `bg-${tagColor}`, 'd-flex', 'flex-row', 'align-items-center')
+    $wrapper.innerHTML = target.innerHTML
+    $wrapper.dataset.category = target.dataset.category
+    $wrapper.tabIndex = '0'
 
-    return tag
+    return $wrapper
   }
 }
