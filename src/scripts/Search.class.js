@@ -38,6 +38,10 @@ export default class Search {
     this._filterAppliances.createFilterHtml()
     this._filterUstensils.createFilterHtml()
 
+    this._filterIngredients.ariaControlInit(this._addTagEvent)
+    this._filterAppliances.ariaControlInit(this._addTagEvent)
+    this._filterUstensils.ariaControlInit(this._addTagEvent)
+
     // Init Events interface
     this._filterEventInit()
     this._tagEventInit()

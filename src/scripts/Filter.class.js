@@ -27,9 +27,9 @@ export default class Filter {
     // Bind private functions to keep context
     this.expandFilter = this.expandFilter.bind(this)
     this.openFilter = this.openFilter.bind(this)
+    this.ariaControlInit = this.ariaControlInit.bind(this)
     this.closeFilter = this.closeFilter.bind(this)
     this._searchFilter = this._searchFilter.bind(this)
-    this._ariaControlInit = this._ariaControlInit.bind(this)
   }
 
   /** GETTERS */
@@ -47,13 +47,12 @@ export default class Filter {
     this.$wrapperFilter.ariaExpanded = false
     this.$wrapperFilter.setAttribute('role', 'listbox')
 
-    this.$wrapperFilter.innerHTML = `<input class="filter__input form-control border-0 bg-${this._color} text-white py-3 px-4" type="text" name="${formatString(this._label)}" aria-label="${this._label}" id="${formatString(this._label)}" placeholder="${this._label}" />`
+    this.$wrapperFilter.innerHTML = `<input tabindex="-1" class="filter__input form-control border-0 bg-${this._color} text-white py-3 px-4" type="text" name="${formatString(this._label)}" aria-label="${this._label}" id="${formatString(this._label)}" placeholder="${this._label}" />`
     this.updateFilterResultHtml(this._items)
 
     this.$wrapperFilter.querySelector('input').addEventListener('input', this._searchFilter)
 
     this.$wrapperFiltersList.appendChild(this.$wrapperFilter)
-    this._ariaControlInit()
   }
 
   /**
@@ -76,8 +75,8 @@ export default class Filter {
     $wrapper.innerHTML = content
 
     if (this.$wrapperFilter.querySelector('ul')) this.$wrapperFilter.querySelector('ul').remove()
-    this.$listItems = Array.from(this.$wrapperFilter.querySelectorAll('.filter__item'))
     this.$wrapperFilter.appendChild($wrapper)
+    this.$listItems = Array.from(this.$wrapperFilter.querySelectorAll('.filter__item'))
   }
 
   /**
@@ -117,9 +116,9 @@ export default class Filter {
 
   /**
    * Keyboard control for filters
+   * @param {Function} callback
    */
-  _ariaControlInit () {
-    // let listItems = Array.from(this.$wrapperFilter.querySelectorAll('.filter__item[tabindex="0"]'))
+  ariaControlInit (callback) {
     let index = 0
 
     this.$wrapperFilter.addEventListener('keydown', event => {
@@ -159,10 +158,7 @@ export default class Filter {
           case 'Enter':
             event.preventDefault()
             if (this.$listItems.includes(document.activeElement)) {
-              this._tag.addTag(document.activeElement)
-              this.$wrapperFilter.ariaExpanded = false
-              this.$wrapperFilter.focus()
-              this.closeFilter()
+              callback(event)
             }
             break
         }
