@@ -87,6 +87,7 @@ export class Receipt {
     this._name = itemData.name
     this._servings = itemData.servings
     this._time = itemData.time
+    this._image = itemData.image
 
     this._description = itemData.description
     this._ustensils = itemData.ustensils
@@ -147,7 +148,7 @@ export class Receipt {
 
     const content = `
       <article tabindex="0" class="card card--reveal${iteration} border-0 bg-light">
-        <div class="card-img-top"></div>
+        <img class="card-img-top" src="${require('../assets/recettes/' + this._image)}" alt="${this._name}" />
         <div class="card-body" tabindex="0">
           <div class="d-flex flex-row mt-2 mb-4 justify-content-between gap-2 ">
             <h2 class="card-title col">${this._name}</h2>
