@@ -11,6 +11,7 @@ export default class Tag {
     // Bind private functions to keep context
     this.addTag = this.addTag.bind(this)
     this.removeTag = this.removeTag.bind(this)
+    this.ariaControlInit = this.ariaControlInit.bind(this)
   }
 
   /** GETTERS */
@@ -57,6 +58,19 @@ export default class Tag {
   }
 
   /**
+   * Keyboard control for filters
+   * @param {Function} callback
+   */
+  ariaControlInit (callback) {
+    this.$wrapperTags.addEventListener('keydown', event => {
+      if (event.key === 'Enter' && document.activeElement.classList.contains('tags__item')) {
+        event.preventDefault()
+        callback(event)
+      }
+    })
+  }
+
+  /**
    * PRIVATE : Container list Tags
    * @returns {HTMLElement}
    */
@@ -79,6 +93,7 @@ export default class Tag {
     $wrapper.classList.add('tags__item', 'mb-2', 'me-2', 'px-3', 'py-2', 'pe-5', 'badge', 'tag', `bg-${tagColor}`, 'd-flex', 'flex-row', 'align-items-center')
     $wrapper.innerHTML = target.innerHTML
     $wrapper.dataset.category = target.dataset.category
+    $wrapper.tabIndex = '0'
 
     return $wrapper
   }

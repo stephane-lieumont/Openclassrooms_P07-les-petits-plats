@@ -46,6 +46,7 @@ export default class Search {
     this._filterEventInit()
     this._tagEventInit()
     this.$searchInput.addEventListener('input', this.search)
+    this._tag.ariaControlInit(this._removeTagEvent)
   }
 
   /**
