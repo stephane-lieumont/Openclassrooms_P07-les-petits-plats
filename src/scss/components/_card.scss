@@ -2,6 +2,14 @@
 .card {
   overflow:hidden;
   height: 100%;
+  transform: scale(1);
+  animation: pop-card .3s ease-in-out forwards;
+
+  @for $i from 1 through 50 {
+    &--reveal#{$i} {
+      animation-delay: 70ms * $i;
+    }
+  }
 
   &-title{
     font-size: 1.3rem;
@@ -56,5 +64,19 @@
     top:5px;
     right:8px;
     background: url('../assets/close.svg') no-repeat center;  
+  }
+}
+
+@keyframes pop-card {
+  0% {
+    transform: scale(0.99);
+  }
+
+  50% {
+    transform: scale(1.01);
+  }
+
+  100% {    
+    transform: scale(1);
   }
 }

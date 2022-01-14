@@ -14,11 +14,11 @@ export default class Search {
     this.$searchInput = document.querySelector('#search input')
 
     // Add classes for search components
-    this._receipts = new ReceiptsList(this._data)
-    this._filterIngredients = new Filter('Ingrédients', 'ingredients', 'Rechercher un ingrédient', 'blue', this._receipts.ingredients)
-    this._filterAppliances = new Filter('Appareils', 'appliances', 'Rechercher un appareil', 'green', this._receipts.appliances)
-    this._filterUstensils = new Filter('Ustensiles', 'ustensils', 'Rechercher un ustensile', 'red', this._receipts.ustensils)
     this._tag = new Tag()
+    this._receipts = new ReceiptsList(this._data)
+    this._filterIngredients = new Filter('Ingrédients', 'ingredients', 'Rechercher un ingrédient', 'blue', this._receipts.ingredients, this._tag)
+    this._filterAppliances = new Filter('Appareils', 'appliances', 'Rechercher un appareil', 'green', this._receipts.appliances, this._tag)
+    this._filterUstensils = new Filter('Ustensiles', 'ustensils', 'Rechercher un ustensile', 'red', this._receipts.ustensils, this._tag)
 
     // Bind publics functions to keep context
     this.search = this.search.bind(this)
@@ -67,7 +67,9 @@ export default class Search {
     } else {
       result = this._receipts.receiptsList
     }
-
+    // ======================================/
+    // Search_feature V1
+    // ======================================/
     for (const tag of this._tag.listTags) {
       const keyword = [formatString(tag.value)]
       switch (tag.category) {
@@ -98,7 +100,9 @@ export default class Search {
     let listAppliances = []
     let listIngredients = []
     let listUstensils = []
-
+    // ======================================/
+    // Search_feature V1
+    // ======================================/
     for (const receipt of listReceipts) {
       listAppliances.push(receipt.appliance)
       listIngredients = listIngredients.concat(receipt.ingredients)
@@ -131,7 +135,9 @@ export default class Search {
   _searchByTitle (keywords, listReceipts) {
     const result = []
     const keywordsString = keywords.join(' ')
-
+    // ======================================/
+    // Search_feature V1
+    // ======================================/
     for (const receipt of listReceipts) {
       if (formatString(receipt.name).includes(keywordsString)) {
         result.push(receipt)
@@ -149,7 +155,9 @@ export default class Search {
   _searchByDescription (keywords, listReceipts) {
     const result = []
     const keywordsString = keywords.join(' ')
-
+    // ======================================/
+    // Search_feature V1
+    // ======================================/
     for (const receipt of listReceipts) {
       if (formatString(receipt.description).includes(keywordsString)) {
         result.push(receipt)
@@ -166,7 +174,9 @@ export default class Search {
    */
   _searchByIngredients (keywords, listReceipts) {
     const result = []
-
+    // ======================================/
+    // Search_feature V1
+    // ======================================/
     for (const keyword of keywords) {
       for (const receipt of listReceipts) {
         for (const ingredient of receipt.keywordsIngredients) {
@@ -188,7 +198,9 @@ export default class Search {
   _searchByAppliance (keywords, listReceipts) {
     const result = []
     const keywordsString = keywords.join(' ')
-
+    // ======================================/
+    // Search_feature V1
+    // ======================================/
     for (const receipt of listReceipts) {
       if (formatString(receipt.appliance).includes(keywordsString)) {
         result.push(receipt)
@@ -205,7 +217,9 @@ export default class Search {
    */
   _searchByUstensils (keywords, listReceipts) {
     const result = []
-
+    // ======================================/
+    // Search_feature V1
+    // ======================================/
     for (const keyword of keywords) {
       for (const receipt of listReceipts) {
         for (const ingredient of receipt.keywordsUstensils) {

@@ -11404,6 +11404,12 @@ body {
   outline: 0 none;
 }
 
+*:focus-visible {
+  border-color: #D04F4F;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px #D04F4F;
+  outline: 0 none;
+}
+
 #logo {
   font-family: "DM sans";
   fill: #D04F4F;
@@ -11434,7 +11440,159 @@ p#result {
 .card {
   overflow: hidden;
   height: 100%;
+  transform: scale(1);
+  animation: pop-card 0.3s ease-in-out forwards;
   font-size: 0.8rem;
+}
+.card--reveal1 {
+  animation-delay: 70ms;
+}
+.card--reveal2 {
+  animation-delay: 140ms;
+}
+.card--reveal3 {
+  animation-delay: 210ms;
+}
+.card--reveal4 {
+  animation-delay: 280ms;
+}
+.card--reveal5 {
+  animation-delay: 350ms;
+}
+.card--reveal6 {
+  animation-delay: 420ms;
+}
+.card--reveal7 {
+  animation-delay: 490ms;
+}
+.card--reveal8 {
+  animation-delay: 560ms;
+}
+.card--reveal9 {
+  animation-delay: 630ms;
+}
+.card--reveal10 {
+  animation-delay: 700ms;
+}
+.card--reveal11 {
+  animation-delay: 770ms;
+}
+.card--reveal12 {
+  animation-delay: 840ms;
+}
+.card--reveal13 {
+  animation-delay: 910ms;
+}
+.card--reveal14 {
+  animation-delay: 980ms;
+}
+.card--reveal15 {
+  animation-delay: 1050ms;
+}
+.card--reveal16 {
+  animation-delay: 1120ms;
+}
+.card--reveal17 {
+  animation-delay: 1190ms;
+}
+.card--reveal18 {
+  animation-delay: 1260ms;
+}
+.card--reveal19 {
+  animation-delay: 1330ms;
+}
+.card--reveal20 {
+  animation-delay: 1400ms;
+}
+.card--reveal21 {
+  animation-delay: 1470ms;
+}
+.card--reveal22 {
+  animation-delay: 1540ms;
+}
+.card--reveal23 {
+  animation-delay: 1610ms;
+}
+.card--reveal24 {
+  animation-delay: 1680ms;
+}
+.card--reveal25 {
+  animation-delay: 1750ms;
+}
+.card--reveal26 {
+  animation-delay: 1820ms;
+}
+.card--reveal27 {
+  animation-delay: 1890ms;
+}
+.card--reveal28 {
+  animation-delay: 1960ms;
+}
+.card--reveal29 {
+  animation-delay: 2030ms;
+}
+.card--reveal30 {
+  animation-delay: 2100ms;
+}
+.card--reveal31 {
+  animation-delay: 2170ms;
+}
+.card--reveal32 {
+  animation-delay: 2240ms;
+}
+.card--reveal33 {
+  animation-delay: 2310ms;
+}
+.card--reveal34 {
+  animation-delay: 2380ms;
+}
+.card--reveal35 {
+  animation-delay: 2450ms;
+}
+.card--reveal36 {
+  animation-delay: 2520ms;
+}
+.card--reveal37 {
+  animation-delay: 2590ms;
+}
+.card--reveal38 {
+  animation-delay: 2660ms;
+}
+.card--reveal39 {
+  animation-delay: 2730ms;
+}
+.card--reveal40 {
+  animation-delay: 2800ms;
+}
+.card--reveal41 {
+  animation-delay: 2870ms;
+}
+.card--reveal42 {
+  animation-delay: 2940ms;
+}
+.card--reveal43 {
+  animation-delay: 3010ms;
+}
+.card--reveal44 {
+  animation-delay: 3080ms;
+}
+.card--reveal45 {
+  animation-delay: 3150ms;
+}
+.card--reveal46 {
+  animation-delay: 3220ms;
+}
+.card--reveal47 {
+  animation-delay: 3290ms;
+}
+.card--reveal48 {
+  animation-delay: 3360ms;
+}
+.card--reveal49 {
+  animation-delay: 3430ms;
+}
+.card--reveal50 {
+  animation-delay: 3500ms;
 }
 .card-title {
   font-size: 1.3rem;
@@ -11483,6 +11641,17 @@ p#result {
   background: url(/public/assets/close.svg) no-repeat center;
 }
 
+@keyframes pop-card {
+  0% {
+    transform: scale(0.99);
+  }
+  50% {
+    transform: scale(1.01);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 .filter {
   position: relative;
   flex: 0 1 190px;
@@ -11539,6 +11708,10 @@ p#result {
   overflow-y: auto;
   overflow-x: hidden;
 }
+.filter--active .filter__item:focus-visible {
+  text-decoration: underline;
+  box-shadow: none;
+}
 .filter--active .filter__input {
   pointer-events: all;
 }
@@ -11550,4 +11723,22 @@ p#result {
 }
 .filter__item {
   cursor: pointer;
+}
+
+.tags__item {
+  animation: pop-tag 0.3s ease-in-out forwards;
+}
+
+@keyframes pop-tag {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }

@@ -63,6 +63,11 @@
       overflow-x: hidden;
     }
 
+    .filter__item:focus-visible {
+      text-decoration: underline;
+      box-shadow: none;
+    }
+
     .filter__input {
       pointer-events: all;
 
@@ -77,5 +82,25 @@
   }
   &__item {
     cursor: pointer;
+  }
+}
+
+.tags__item {
+  animation: pop-tag .3s ease-in-out forwards;
+}
+
+@keyframes pop-tag {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  100% {    
+    transform: scale(1);
   }
 }

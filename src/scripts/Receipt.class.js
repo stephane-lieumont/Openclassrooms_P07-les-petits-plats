@@ -42,7 +42,11 @@ export class ReceiptsList {
       this.$wrapperReceipts.innerHTML = '<p id="result" class="m-4 text-secondary">Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>'
     } else {
       const $wrapper = this.createHTMLContainer()
-      arrayReceipts.forEach(receipt => $wrapper.append(receipt.createHTMLComponent()))
+      let i = 0
+      arrayReceipts.forEach(receipt => {
+        $wrapper.append(receipt.createHTMLComponent(i))
+        i++
+      })
       this.$wrapperReceipts.append($wrapper)
     }
   }
@@ -134,23 +138,24 @@ export class Receipt {
   }
 
   /**
+   * @param {Number} iteration
    * @returns {HTMLElement}
    */
-  createHTMLComponent () {
+  createHTMLComponent (iteration) {
     const $wrapper = document.createElement('li')
     $wrapper.classList.add('col-xl-4', 'col-md-6', 'col-sm-12', 'box', 'px-4', 'p-0', 'mb-5')
 
     const content = `
-      <article class="card border-0 bg-light">
+      <article tabindex="0" class="card card--reveal${iteration} border-0 bg-light">
         <div class="card-img-top"></div>
-        <div class="card-body">
+        <div class="card-body" tabindex="0">
           <div class="d-flex flex-row mt-2 mb-4 justify-content-between gap-2 ">
             <h2 class="card-title col">${this._name}</h2>
             <div class="col-4 d-flex flex-row align-items-center justify-content-end">
               <svg class="me-2" width="20" height="20">
                 <use xlink:href="${clockAsset}#clock"/>
               </svg>
-              <p class="card-subtitle">${this._time} min</p>
+              <h3 class="card-subtitle">${this._time} min</h3>
             </div>
           </div>
           <div class="ingredients d-flex flex-row justify-content-between gap-2">
