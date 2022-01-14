@@ -2,9 +2,14 @@
 .filter {
   position: relative;  
   flex:0 1 190px;
-  transition: flex .3s ease-in-out;
   min-width: 56px;
   max-width: 40%;
+  cursor: pointer;
+  transition: opacity .3s ease-in-out, flex .3s ease-in-out;
+
+  &:hover {
+    opacity: 0.75;
+  }
 
   &::before {
     content:"";
@@ -16,7 +21,6 @@
     right:0;
     background: url('../assets/arrow.svg') no-repeat center;
     transition: transform .3s ease-in-out;
-    cursor: pointer;
   }
 
   &__input {
@@ -54,11 +58,16 @@
 
   &--active {
     flex:1 1 50%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    &:hover {
+      opacity: 1;
+    }
 
     .filter__result {
       opacity: 1;
       display: flex;
-      max-height: 200px;
+      max-height: 250px;
       overflow-y: auto;
       overflow-x: hidden;
     }

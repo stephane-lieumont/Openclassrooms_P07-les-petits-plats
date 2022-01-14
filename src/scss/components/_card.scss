@@ -1,9 +1,28 @@
 
 .card {
+  position: relative;
   overflow:hidden;
   height: 100%;
   transform: scale(1);
   animation: pop-card .3s ease-in-out forwards;
+  cursor: pointer;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top:0;
+    left:0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease-in-out;
+  }
+
+  &:hover::after {
+    opacity: 0.25;
+  }
 
   @for $i from 1 through 50 {
     &--reveal#{$i} {
@@ -31,6 +50,10 @@
     font-weight: $font-weight-bold;
     white-space: nowrap;
     margin:0;
+  }
+
+  &-img-top {
+    object-fit: cover;
   }
 
   ul {

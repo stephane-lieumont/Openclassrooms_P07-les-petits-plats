@@ -11396,6 +11396,13 @@ textarea.form-control-lg {
 }
 body {
   color: black;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+header {
+  position: relative;
+  z-index: 9;
 }
 
 .form-input:focus {
@@ -11433,16 +11440,37 @@ body {
   transform: translateY(-50%);
 }
 
+#filters {
+  height: 72px;
+}
+
 p#result {
   opacity: 0.5;
 }
 
 .card {
+  position: relative;
   overflow: hidden;
   height: 100%;
   transform: scale(1);
   animation: pop-card 0.3s ease-in-out forwards;
+  cursor: pointer;
   font-size: 0.8rem;
+}
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+.card:hover::after {
+  opacity: 0.25;
 }
 .card--reveal1 {
   animation-delay: 70ms;
@@ -11613,6 +11641,9 @@ p#result {
   white-space: nowrap;
   margin: 0;
 }
+.card-img-top {
+  object-fit: cover;
+}
 .card ul {
   list-style: none;
   padding: 0;
@@ -11641,9 +11672,13 @@ p#result {
 .filter {
   position: relative;
   flex: 0 1 190px;
-  transition: flex 0.3s ease-in-out;
   min-width: 56px;
   max-width: 40%;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out, flex 0.3s ease-in-out;
+}
+.filter:hover {
+  opacity: 0.75;
 }
 .filter::before {
   content: "";
@@ -11655,7 +11690,6 @@ p#result {
   right: 0;
   background: url(/public/assets/arrow.svg) no-repeat center;
   transition: transform 0.3s ease-in-out;
-  cursor: pointer;
 }
 .filter__input {
   pointer-events: none;
@@ -11686,11 +11720,15 @@ p#result {
 }
 .filter--active {
   flex: 1 1 50%;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.filter--active:hover {
+  opacity: 1;
 }
 .filter--active .filter__result {
   opacity: 1;
   display: flex;
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: auto;
   overflow-x: hidden;
 }

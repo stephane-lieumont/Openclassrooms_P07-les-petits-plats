@@ -1,5 +1,12 @@
 body {
   color: black;
+  max-width: 1600px;
+  margin:0 auto;
+}
+
+header {
+  position: relative;
+  z-index: 9;
 }
 
 .form-input:focus {
