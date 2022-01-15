@@ -229,8 +229,8 @@ export default class Search {
     // ======================================/
     for (const keyword of keywords) {
       for (const receipt of listReceipts) {
-        for (const ingredient of receipt.keywordsUstensils) {
-          if (ingredient.includes(keyword) && keyword.length >= 3) {
+        for (const ustensil of receipt.keywordsUstensils) {
+          if (ustensil.includes(keyword) && keyword.length >= 3) {
             result.push(receipt)
           }
         }
