@@ -77,20 +77,22 @@ export default class Search {
     // ======================================/
     // Search_feature V1 Tag Research
     // ======================================/
-    for (const tag of this._tag.listTags) {
-      const keyword = [formatString(tag.value)]
-      switch (tag.category) {
-        case 'ingredients':
-          result = this._searchByIngredients(keyword, result)
-          break
+    if (this._tag.listTags.length > 0) {
+      for (const tag of this._tag.listTags) {
+        const keyword = [formatString(tag.value)]
+        switch (tag.category) {
+          case 'ingredients':
+            result = this._searchByIngredients(keyword, result)
+            break
 
-        case 'appliances':
-          result = this._searchByAppliance(keyword, result)
-          break
+          case 'appliances':
+            result = this._searchByAppliance(keyword, result)
+            break
 
-        case 'ustensils':
-          result = this._searchByUstensils(keyword, result)
-          break
+          case 'ustensils':
+            result = this._searchByUstensils(keyword, result)
+            break
+        }
       }
     }
 

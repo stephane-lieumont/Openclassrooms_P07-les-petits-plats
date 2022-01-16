@@ -1766,20 +1766,22 @@ function searchV1 (searchParams) {
     result = searchParams.receipts;
   }
 
-  for (const tag of searchParams.tags) {
-    const keyword = [formatString(tag.value)];
-    switch (tag.category) {
-      case 'ingredients':
-        result = searchByIngredientsV1(keyword, result);
-        break;
+  if (searchParams.tags.length > 0) {
+    for (const tag of searchParams.tags) {
+      const keyword = [formatString(tag.value)];
+      switch (tag.category) {
+        case 'ingredients':
+          result = searchByIngredientsV1(keyword, result);
+          break;
 
-      case 'appliances':
-        result = searchByApplianceV1(keyword, result);
-        break;
+        case 'appliances':
+          result = searchByApplianceV1(keyword, result);
+          break;
 
-      case 'ustensils':
-        result = searchByUstensilsV1(keyword, result);
-        break;
+        case 'ustensils':
+          result = searchByUstensilsV1(keyword, result);
+          break;
+      }
     }
   }
 
