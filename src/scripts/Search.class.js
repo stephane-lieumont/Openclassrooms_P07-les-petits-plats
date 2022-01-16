@@ -59,6 +59,48 @@ export default class Search {
     this._tagEventInit()
   }
 
+  search () {
+    const inputKeywordsTab = formatString(this.$searchInput.value.replace(/\s+/g, '+')).split('+')
+    let result = []
+    // ======================================/
+    // Search_feature V1 Input Research
+    // ======================================/
+    if (this.$searchInput.value.length >= 3) {
+      result = result.concat(this._searchByTitle(inputKeywordsTab, this._receipts.receiptsList)) // keyword full string
+      result = result.concat(this._searchByDescription(inputKeywordsTab, this._receipts.receiptsList)) // keyword full string
+      result = result.concat(this._searchByAppliance(inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
+      result = result.concat(this._searchByIngredients(inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
+      result = result.concat(this._searchByUstensils(inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
+    } else {
+      result = this._receipts.receiptsList
+    }
+    // ======================================/
+    // Search_feature V1 Tag Research
+    // ======================================/
+    if (this._tag.listTags.length > 0) {
+      for (const tag of this._tag.listTags) {
+        const keyword = [formatString(tag.value)]
+        switch (tag.category) {
+          case 'ingredients':
+            result = this._searchByIngredients(keyword, result)
+            break
+
+          case 'appliances':
+            result = this._searchByAppliance(keyword, result)
+            break
+
+          case 'ustensils':
+            result = this._searchByUstensils(keyword, result)
+            break
+        }
+      }
+    }
+
+    result = [...new Set(result)]
+
+    this.displayResult(result)
+  }
+
   /**
    * Update filters list items after search event
    * @param {Receipt[]} listReceipts
@@ -208,9 +250,17 @@ export default class Search {
     // ======================================/
     // Search_feature V2
     // ======================================/
-    keywords.forEach(keyword => {
-      result = listReceipts.filter(item => item.keywordsUstensils.includes(formatString(keyword)) && keyword.length >= 3)
-    })
+
+    for (const keyword of keywords) {
+      for (const receipt of listReceipts) {
+        for (const ustensil of receipt.keywordsUstensils) {
+          if (ustensil.includes(keyword) && keyword.length >= 3) {
+            result.push(receipt)
+          }
+        }
+      }
+    }
+
 
     return result
   }
