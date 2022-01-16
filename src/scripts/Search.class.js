@@ -136,45 +136,6 @@ export default class Search {
     this._filterUstensils.closeFilter()
   }
 
-  search () {
-    const inputKeywordsTab = formatString(this.$searchInput.value.replace(/\s+/g, '+')).split('+')
-    let result = []
-    // ======================================/
-    // Search_feature V2 Input Research
-    // ======================================/
-    if (this.$searchInput.value.length >= 3) {
-      result = result.concat(this._searchByTitle(inputKeywordsTab, this._receipts.receiptsList)) // keyword full string
-      result = result.concat(this._searchByDescription(inputKeywordsTab, this._receipts.receiptsList)) // keyword full string
-      result = result.concat(this._searchByAppliance(inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
-      result = result.concat(this._searchByIngredients(inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
-      result = result.concat(this._searchByUstensils(inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
-    } else {
-      result = this._receipts.receiptsList
-    }
-    // ======================================/
-    // Search_feature V2 Tag Research
-    // ======================================/
-    if (this._tag.listTags.length > 0) {
-      this._tag.listTags.forEach(tag => {
-        switch (tag.category) {
-          case 'ingredients':
-            result = this._searchByIngredients(new Array(tag.value), result)
-            break
-          case 'appliances':
-            result = this._searchByAppliance(new Array(tag.value), result)
-            break
-          case 'ustensils':
-            result = this._searchByUstensils(new Array(tag.value), result)
-            break
-        }
-      })
-    }
-
-    result = [...new Set(result)]
-
-    this.displayResult(result)
-  }
-
   /**
    * @param {Array} keywords
    * @param {Receipt[]} listReceipts
@@ -246,7 +207,7 @@ export default class Search {
    * @returns {Receipt[]}
    */
   _searchByUstensils (keywords, listReceipts) {
-    let result = []
+    const result = []
     // ======================================/
     // Search_feature V2
     // ======================================/
@@ -260,7 +221,6 @@ export default class Search {
         }
       }
     }
-
 
     return result
   }
