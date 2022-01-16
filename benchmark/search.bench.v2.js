@@ -1751,7 +1751,7 @@ function formatString (string) {
   return formatString;
 }
 
-/** test CASE : Search V1 native loop */
+/** test CASE : Search V2 native loop */
 function searchV2 (searchParams) {
   const keywords = formatString(searchParams.input.replace(/\s+/g, '+')).split('+');
   let result = [];
@@ -1766,22 +1766,24 @@ function searchV2 (searchParams) {
     result = searchParams.receipts;
   }
 
-  searchParams.tags.forEach(tag => {
-    const keyword = [formatString(tag.value)];
-    switch (tag.category) {
-      case 'ingredients':
-        result = searchByIngredientsV2(keyword, result);
-        break;
+  if (searchParams.tags.length > 0) {
+    searchParams.tags.forEach(tag => {
+      const keyword = [formatString(tag.value)];
+      switch (tag.category) {
+        case 'ingredients':
+          result = searchByIngredientsV2(keyword, result);
+          break;
 
-      case 'appliances':
-        result = searchByApplianceV2(keyword, result);
-        break;
+        case 'appliances':
+          result = searchByApplianceV2(keyword, result);
+          break;
 
-      case 'ustensils':
-        result = searchByUstensilsV2(keyword, result);
-        break;
-    }
-  })
+        case 'ustensils':
+          result = searchByUstensilsV2(keyword, result);
+          break;
+      }
+    })
+  }
 
   result = [...new Set(result)];
   return result;
@@ -1805,7 +1807,7 @@ function searchByIngredientsV2 (keywords, listReceipts) {
   keywords.forEach(keyword => {
     result = listReceipts.filter(item => {
       item.ingredients.forEach(ingredient => {
-        if (formatString(ingredient.ingredient).includes(formatString(keyword)) && keyword.length >= 3) {
+        if (formatString(ingredient.ingredient).includes(keyword) && keyword.length >= 3) {
           return true;
         }
       })
@@ -1827,7 +1829,7 @@ function searchByUstensilsV2 (keywords, listReceipts) {
   keywords.forEach(keyword => {
     result = listReceipts.filter(item => {
       item.ustensils.forEach(ustensil => {
-        if (formatString(ustensil).includes(formatString(keyword)) && keyword.length >= 3) {
+        if (formatString(ustensil).includes(keyword) && keyword.length >= 3) {
           return true;
         }
       })

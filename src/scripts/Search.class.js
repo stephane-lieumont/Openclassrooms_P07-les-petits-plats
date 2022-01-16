@@ -22,7 +22,6 @@ export default class Search {
 
     // Bind publics functions to keep context
     this.search = this.search.bind(this)
-    this.searchByCategory = this.searchByCategory.bind(this)
     this.filtersClose = this.filtersClose.bind(this)
     this.displayResult = this.displayResult.bind(this)
     this.updateFiltersList = this.updateFiltersList.bind(this)
@@ -104,18 +103,30 @@ export default class Search {
     if (this.$searchInput.value.length >= 3) {
       result = result.concat(this._searchByTitle(inputKeywordsTab, this._receipts.receiptsList)) // keyword full string
       result = result.concat(this._searchByDescription(inputKeywordsTab, this._receipts.receiptsList)) // keyword full string
-      result = result.concat(this.searchByCategory('appliances', inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
-      result = result.concat(this.searchByCategory('ingredients', inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
-      result = result.concat(this.searchByCategory('ustensils', inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
+      result = result.concat(this._searchByAppliance(inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
+      result = result.concat(this._searchByIngredients(inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
+      result = result.concat(this._searchByUstensils(inputKeywordsTab, this._receipts.receiptsList)) // keyword string one word
     } else {
       result = this._receipts.receiptsList
     }
     // ======================================/
     // Search_feature V2 Tag Research
     // ======================================/
-    this._tag.listTags.forEach(tag => {
-      result = this.searchByCategory(tag.category, new Array(tag.value), result)
-    })
+    if (this._tag.listTags.length > 0) {
+      this._tag.listTags.forEach(tag => {
+        switch (tag.category) {
+          case 'ingredients':
+            result = this._searchByIngredients(new Array(tag.value), result)
+            break
+          case 'appliances':
+            result = this._searchByAppliance(new Array(tag.value), result)
+            break
+          case 'ustensils':
+            result = this._searchByUstensils(new Array(tag.value), result)
+            break
+        }
+      })
+    }
 
     result = [...new Set(result)]
 
@@ -152,25 +163,6 @@ export default class Search {
     result = listReceipts.filter(item => formatString(item.description).includes(keywordsString) && keywordsString.length >= 3)
 
     return result
-  }
-
-  /**
-   * @param {String} category
-   * @param {Array} keywords
-   * @param {Receipt[]} listReceipts
-   * @returns {Receipt[]}
-   */
-  searchByCategory (category, keywords, listReceipts) {
-    switch (category) {
-      case 'ingredients':
-        return this._searchByIngredients(keywords, listReceipts)
-
-      case 'appliances':
-        return this._searchByAppliance(keywords, listReceipts)
-
-      case 'ustensils':
-        return this._searchByUstensils(keywords, listReceipts)
-    }
   }
 
   /**
