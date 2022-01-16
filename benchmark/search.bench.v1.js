@@ -1,5 +1,7 @@
+/* eslint-disable semi */
 /* eslint-disable no-unused-vars */
 
+/** Receipts Objects */
 const receipts = [
   {
     id: 1,
@@ -1725,172 +1727,136 @@ const receipts = [
     appliance: 'Four',
     ustensils: ['Rouleau à patisserie', 'Fouet']
   }
-]
+];
 
+/** Search Parameters */
 const searchParams = {
   receipts: receipts,
-  input: 'Limo',
-  tags: []
+  input: 'limonade',
+  tags: [{
+    value: 'citron',
+    category: 'ingredient'
+  }]
+};
+
+/** Function to lowercase and delete accents */
+function formatString (string) {
+  let formatString = string.toLowerCase();
+  formatString = formatString.replace(/[éèêë]/g, 'e');
+  formatString = formatString.replace(/[àâ]/g, 'a');
+  formatString = formatString.replace(/[ùû]/g, 'u');
+  formatString = formatString.replace(/[îï]/g, 'i');
+  formatString = formatString.replace(/[ç]/g, 'c');
+
+  return formatString;
 }
 
-search(searchParams)
+/** test CASE : Search V1 native loop */
+function searchV1 (searchParams) {
+  const keywords = formatString(searchParams.input.replace(/\s+/g, '+')).split('+');
+  let result = [];
 
-/**
- * FUNCTION SERCH V1
- * @param {Array} keywordsTab
- * @param {Array} tags
- * @param {Array} receipts
- * @returns {Array}
- */
-function search (searchParams) {
-  const keywords = formatString(searchParams.input.replace(/\s+/g, '+')).split('+')
-  let result = []
-
-  result = result.concat(searchByTitle(keywords, searchParams.receipts)) // keyword full string
-  result = result.concat(searchByDescription(keywords, searchParams.receipts)) // keyword full string
-  result = result.concat(searchByAppliance(keywords, searchParams.receipts)) // keyword string one word
-  result = result.concat(searchByIngredients(keywords, searchParams.receipts)) // keyword string one word
-  result = result.concat(searchByUstensils(keywords, searchParams.receipts)) // keyword string one word
+  if (searchParams.input.length >= 3) {
+    result = result.concat(searchByTitleV1(keywords, searchParams.receipts)); // keyword full string
+    result = result.concat(searchByDescriptionV1(keywords, searchParams.receipts)); // keyword full string
+    result = result.concat(searchByApplianceV1(keywords, searchParams.receipts)); // keyword string one word
+    result = result.concat(searchByIngredientsV1(keywords, searchParams.receipts)); // keyword string one word
+    result = result.concat(searchByUstensilsV1(keywords, searchParams.receipts)); // keyword string one word
+  } else {
+    result = searchParams.receipts;
+  }
 
   for (const tag of searchParams.tags) {
-    const keyword = [formatString(tag.value)]
+    const keyword = [formatString(tag.value)];
     switch (tag.category) {
       case 'ingredients':
-        result = searchByIngredients(keyword, result)
-        break
+        result = searchByIngredientsV1(keyword, result);
+        break;
 
       case 'appliances':
-        result = searchByAppliance(keyword, result)
-        break
+        result = searchByApplianceV1(keyword, result);
+        break;
 
       case 'ustensils':
-        result = searchByUstensils(keyword, result)
-        break
+        result = searchByUstensilsV1(keyword, result);
+        break;
     }
   }
 
-  result = [...new Set(result)]
-  return result
+  result = [...new Set(result)];
+  return result;
 }
 
-/**
-   * @param {Array} keywords
-   * @param {Array} listReceipts
-   * @returns {Array}
-   */
-function searchByTitle (keywords, listReceipts) {
-  const result = []
-  const keywordsString = keywords.join(' ')
-  // ======================================/
-  // Search_feature V1
-  // ======================================/
+function searchByTitleV1 (keywords, listReceipts) {
+  const result = [];
+  const keywordsString = keywords.join(' ');
+
   for (const receipt of listReceipts) {
     if (formatString(receipt.name).includes(keywordsString)) {
-      result.push(receipt)
+      result.push(receipt);
     }
   }
 
-  return result
+  return result;
 }
 
-/**
-   * @param {Array} keywords
-   * @param {Array} listReceipts
-   * @returns {Array}
-   */
-function searchByDescription (keywords, listReceipts) {
-  const result = []
-  const keywordsString = keywords.join(' ')
-  // ======================================/
-  // Search_feature V1
-  // ======================================/
+function searchByDescriptionV1 (keywords, listReceipts) {
+  const result = [];
+  const keywordsString = keywords.join(' ');
   for (const receipt of listReceipts) {
     if (formatString(receipt.description).includes(keywordsString)) {
-      result.push(receipt)
+      result.push(receipt);
     }
   }
 
-  return result
+  return result;
 }
 
-/**
-   * @param {Array} keywords
-   * @param {Array} listReceipts
-   * @returns {Array}
-   */
-function searchByIngredients (keywords, listReceipts) {
-  const result = []
-  // ======================================/
-  // Search_feature V1
-  // ======================================/
+function searchByIngredientsV1 (keywords, listReceipts) {
+  const result = [];
   for (const keyword of keywords) {
     for (const receipt of listReceipts) {
       for (const ingredient of receipt.ingredients) {
-        if (ingredient.ingredient.includes(keyword) && keyword.length >= 3) {
-          result.push(receipt)
+        if (formatString(ingredient.ingredient).includes(keyword) && keyword.length >= 3) {
+          result.push(receipt);
         }
       }
     }
   }
 
-  return result
+  return result;
 }
 
-/**
-   * @param {Array} keywords
-   * @param {Receipt[]} listReceipts
-   * @returns {Receipt[]}
-   */
-function searchByAppliance (keywords, listReceipts) {
-  const result = []
-  const keywordsString = keywords.join(' ')
-  // ======================================/
-  // Search_feature V1
-  // ======================================/
+function searchByApplianceV1 (keywords, listReceipts) {
+  const result = [];
+  const keywordsString = keywords.join(' ');
   for (const receipt of listReceipts) {
     if (formatString(receipt.appliance).includes(keywordsString)) {
-      result.push(receipt)
+      result.push(receipt);
     }
   }
 
-  return result
+  return result;
 }
 
-/**
-   * @param {Array} keywords
-   * @param {Array} listReceipts
-   * @returns {Receipt[]}
-   */
-function searchByUstensils (keywords, listReceipts) {
-  const result = []
-  // ======================================/
-  // Search_feature V1
-  // ======================================/
+function searchByUstensilsV1 (keywords, listReceipts) {
+  const result = [];
   for (const keyword of keywords) {
     for (const receipt of listReceipts) {
-      for (const ustensils of receipt.keywordsUstensils) {
+      for (const ustensils of receipt.ustensils) {
         if (ustensils.includes(keyword) && keyword.length >= 3) {
-          result.push(receipt)
+          result.push(receipt);
         }
       }
     }
   }
 
-  return result
+  return result;
 }
 
-/**
- * FUNCTION FORMAT STRING
- * @param {Srting} string
- * @returns {String}
- */
-function formatString (string) {
-  let formatString = string.toLowerCase()
-  formatString = formatString.replace(/[éèêë]/g, 'e')
-  formatString = formatString.replace(/[àâ]/g, 'a')
-  formatString = formatString.replace(/[ùû]/g, 'u')
-  formatString = formatString.replace(/[îï]/g, 'i')
-  formatString = formatString.replace(/[ç]/g, 'c')
+/** Result Search algorithmes  V1 on HTML */
+const $resultDOM = document.querySelector('#target');
+$resultDOM.innerHTML = JSON.stringify(searchV1(searchParams), null, 4);
 
-  return formatString
-}
+/** Execute Search algorithmes  V1 */
+searchV1(searchParams)
