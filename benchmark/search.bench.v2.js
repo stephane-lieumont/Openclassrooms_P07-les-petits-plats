@@ -1751,7 +1751,7 @@ function formatString (string) {
   return formatString;
 }
 
-/** test CASE : Search V2 fonctionnal loop */
+/** test CASE : Search V2 fonctionnal */
 function searchV2 (searchParams) {
   const keywords = formatString(searchParams.input.replace(/\s+/g, '+')).split('+');
   let result = [];
@@ -1806,14 +1806,16 @@ function searchByIngredientsV2 (keywords, listReceipts) {
 
   keywords.forEach(keyword => {
     result = listReceipts.filter(item => {
+      let valid = false
       item.ingredients.forEach(ingredient => {
         if (formatString(ingredient.ingredient).includes(keyword) && keyword.length >= 3) {
-          return true;
+          valid = true;
         }
       });
-      return false;
+      return valid;
     });
   });
+
   return result;
 }
 
@@ -1828,21 +1830,22 @@ function searchByUstensilsV2 (keywords, listReceipts) {
 
   keywords.forEach(keyword => {
     result = listReceipts.filter(item => {
+      let valid = false
       item.ustensils.forEach(ustensil => {
         if (formatString(ustensil).includes(keyword) && keyword.length >= 3) {
-          return true;
+          valid = true;
         }
       });
-      return false;
+      return valid;
     });
   });
 
   return result;
 }
 
-/** Result Search algorithmes V2 on HTML */
+/** Result Search algorithmes  V2 on HTML */
 const $resultDOM = document.querySelector('#target');
 $resultDOM.innerHTML = JSON.stringify(searchV2(searchParams), null, 4);
 
-/** Execute Search algorithmes V2 */
-searchV2(searchParams);
+/** Execute Search algorithmes  V2 */
+searchV2(searchParams)
