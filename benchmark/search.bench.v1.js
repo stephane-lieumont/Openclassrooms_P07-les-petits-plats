@@ -1735,7 +1735,7 @@ const searchParams = {
   input: 'limonade',
   tags: [{
     value: 'citron',
-    category: 'ingredient'
+    category: 'ingredients'
   }]
 };
 
@@ -1861,4 +1861,4 @@ const $resultDOM = document.querySelector('#target');
 $resultDOM.innerHTML = JSON.stringify(searchV1(searchParams), null, 4);
 
 /** Execute Search algorithmes  V1 */
-searchV1(searchParams)
+searchV1(searchParams);

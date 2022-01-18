@@ -116,6 +116,13 @@ export default class Search {
       listAppliances.push(receipt.appliance)
       listIngredients = listIngredients.concat(receipt.ingredients)
       listUstensils = listUstensils.concat(receipt.ustensils)
+
+      // Remove tags selected on listItem
+      for (const tag of this._tag.listTags) {
+        listAppliances.splice(listAppliances.indexOf(tag.value), 1)
+        listIngredients.splice(listIngredients.indexOf(tag.value), 1)
+        listUstensils.splice(listUstensils.indexOf(tag.value), 1)
+      }
     }
 
     listAppliances = [...new Set(listAppliances)]

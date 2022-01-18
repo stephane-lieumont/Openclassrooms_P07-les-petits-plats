@@ -18,8 +18,7 @@ const config = {
 
   output: {
     path: path.resolve(__dirname, 'public'),
-    filename: dev ? 'js/app.js' : 'js/app_[chunkhash:8].js',
-    publicPath: '/public/'
+    filename: dev ? 'js/app.js' : 'js/app_[chunkhash:8].js'
   },
   module: {
     rules: [

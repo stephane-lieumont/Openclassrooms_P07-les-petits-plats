@@ -23,6 +23,11 @@
     transition: transform .3s ease-in-out;
   }
 
+  + .disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
   &__input {
     pointer-events: none;
     text-overflow: ellipsis;
