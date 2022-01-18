@@ -1735,7 +1735,7 @@ const searchParams = {
   input: 'limonade',
   tags: [{
     value: 'citron',
-    category: 'ingredient'
+    category: 'ingredients'
   }]
 };
 
@@ -1810,10 +1810,10 @@ function searchByIngredientsV2 (keywords, listReceipts) {
         if (formatString(ingredient.ingredient).includes(keyword) && keyword.length >= 3) {
           return true;
         }
-      })
+      });
       return false;
-    })
-  })
+    });
+  });
   return result;
 }
 
@@ -1832,10 +1832,10 @@ function searchByUstensilsV2 (keywords, listReceipts) {
         if (formatString(ustensil).includes(keyword) && keyword.length >= 3) {
           return true;
         }
-      })
+      });
       return false;
-    })
-  })
+    });
+  });
 
   return result;
 }
@@ -1845,4 +1845,4 @@ const $resultDOM = document.querySelector('#target');
 $resultDOM.innerHTML = JSON.stringify(searchV2(searchParams), null, 4);
 
 /** Execute Search algorithmes V2 */
-searchV2(searchParams)
+searchV2(searchParams);
