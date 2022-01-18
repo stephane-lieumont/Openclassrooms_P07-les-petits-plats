@@ -1782,7 +1782,7 @@ function searchV2 (searchParams) {
           result = searchByUstensilsV2(keyword, result);
           break;
       }
-    })
+    });
   }
 
   result = [...new Set(result)];
@@ -1848,4 +1848,4 @@ const $resultDOM = document.querySelector('#target');
 $resultDOM.innerHTML = JSON.stringify(searchV2(searchParams), null, 4);
 
 /** Execute Search algorithmes  V2 */
-searchV2(searchParams)
+searchV2(searchParams);
