@@ -1806,14 +1806,16 @@ function searchByIngredientsV2 (keywords, listReceipts) {
 
   keywords.forEach(keyword => {
     result = listReceipts.filter(item => {
+      let valid = false
       item.ingredients.forEach(ingredient => {
         if (formatString(ingredient.ingredient).includes(keyword) && keyword.length >= 3) {
-          return true;
+          valid = true;
         }
       });
-      return false;
+      return valid;
     });
   });
+
   return result;
 }
 
@@ -1828,12 +1830,13 @@ function searchByUstensilsV2 (keywords, listReceipts) {
 
   keywords.forEach(keyword => {
     result = listReceipts.filter(item => {
+      let valid = false
       item.ustensils.forEach(ustensil => {
         if (formatString(ustensil).includes(keyword) && keyword.length >= 3) {
-          return true;
+          valid = true;
         }
       });
-      return false;
+      return valid;
     });
   });
 
