@@ -1735,7 +1735,7 @@ const searchParams = {
   input: 'limonade',
   tags: [{
     value: 'citron',
-    category: 'ingredient'
+    category: 'ingredients'
   }]
 };
 
@@ -1751,7 +1751,7 @@ function formatString (string) {
   return formatString;
 }
 
-/** test CASE : Search V2 native loop */
+/** test CASE : Search V2 fonctionnal loop */
 function searchV2 (searchParams) {
   const keywords = formatString(searchParams.input.replace(/\s+/g, '+')).split('+');
   let result = [];
@@ -1810,10 +1810,10 @@ function searchByIngredientsV2 (keywords, listReceipts) {
         if (formatString(ingredient.ingredient).includes(keyword) && keyword.length >= 3) {
           return true;
         }
-      })
+      });
       return false;
-    })
-  })
+    });
+  });
   return result;
 }
 
@@ -1832,17 +1832,17 @@ function searchByUstensilsV2 (keywords, listReceipts) {
         if (formatString(ustensil).includes(keyword) && keyword.length >= 3) {
           return true;
         }
-      })
+      });
       return false;
-    })
-  })
+    });
+  });
 
   return result;
 }
 
-/** Result Search algorithmes  V1 on HTML */
+/** Result Search algorithmes V2 on HTML */
 const $resultDOM = document.querySelector('#target');
 $resultDOM.innerHTML = JSON.stringify(searchV2(searchParams), null, 4);
 
-/** Execute Search algorithmes  V1 */
-searchV2(searchParams)
+/** Execute Search algorithmes V2 */
+searchV2(searchParams);

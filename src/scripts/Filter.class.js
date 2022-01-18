@@ -62,6 +62,14 @@ export default class Filter {
   updateFilterResultHtml (items) {
     this._items = items
 
+    if (this._items.length === 0) {
+      this.$wrapperFilter.classList.add('disabled')
+      this.$wrapperFilter.tabIndex = -1
+    } else {
+      this.$wrapperFilter.classList.remove('disabled')
+      this.$wrapperFilter.tabIndex = 0
+    }
+
     const $wrapper = document.createElement('ul')
     $wrapper.classList.add('row', 'filter__result', 'flex-wrap', 'm-0', 'p-3', 'pt-0', 'list-unstyled', 'text-white', 'fs-6')
     $wrapper.setAttribute('role', 'listbox')
