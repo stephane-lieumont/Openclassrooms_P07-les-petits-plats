@@ -1,6 +1,6 @@
 
 # Les petits plats : P7 OpenClassrooms	
-![made-with-node](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)  ![made-with-javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E) ![made-with-sass](	https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white) ![GitHub repo size](https://img.shields.io/github/repo-size/StephaneLi/StephaneLieumont_6_09122021)
+![made-with-node](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white) ![made-with-javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E) ![made-with-sass](	https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white) ![GitHub repo size](https://img.shields.io/github/repo-size/StephaneLi/StephaneLieumont_6_09122021)  
 
 ---
 ## Contexte 
@@ -35,13 +35,17 @@ npm run prod
 - Une fiche d’investigation de fonctionnalité sur l’algorithme de recherche (format PDF). Vous y intégrerez le choix de l'algorithme définitif en comparaison à l’autre algorithme de recherche développé.
 - Un lien vers le repo GitHub du projet comprenant les deux branches avec les deux solutions différentes pour la recherche. 
 
+[search_native](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/search_feature_v1)  
+[search_fonctional](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/search_feature_v2)  
+[Investigation](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/master/benchmark)
+
 ## Contribution
-Deux branches sont utilisées pour les deux algorythmes different
-search_feature_v1
-search_feature_v2
+Deux branches sont utilisées pour les deux algorythmes different  
+[search_feature_v1](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/search_feature_v1)  
+[search_feature_v2](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/search_feature_v2)  
 
 ##  Auteur
 
-Stéphane LIEUMONT
-[Projets OpenClassrooms](https://oc.sli-3d.fr/)
-[Portfolio 3D](https://portfolio.sli-3d.fr/)
+Stéphane LIEUMONT  
+[Projets OpenClassrooms](https://oc.sli-3d.fr/)  
+[Portfolio 3D](https://portfolio.sli-3d.fr/)  
