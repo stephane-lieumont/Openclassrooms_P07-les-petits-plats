@@ -54,8 +54,8 @@ export default class Search {
    * @param {Receipt[]} listReceipt
    */
   displayResult (listReceipts) {
-    this._receipts.createHTMLContent(listReceipts)
     this.updateFiltersList(listReceipts)
+    this._receipts.createHTMLContent(listReceipts)
     this._tagEventInit()
   }
 
@@ -116,6 +116,13 @@ export default class Search {
       listAppliances.push(receipt.appliance)
       listIngredients = listIngredients.concat(receipt.ingredients)
       listUstensils = listUstensils.concat(receipt.ustensils)
+
+      // Remove tags selected on listItem
+      for (const tag of this._tag.listTags) {
+        listAppliances.splice(listAppliances.indexOf(tag.value), 1)
+        listIngredients.splice(listIngredients.indexOf(tag.value), 1)
+        listUstensils.splice(listUstensils.indexOf(tag.value), 1)
+      }
     }
 
     listAppliances = [...new Set(listAppliances)]
@@ -142,12 +149,16 @@ export default class Search {
    * @returns {Receipt[]}
    */
   _searchByTitle (keywords, listReceipts) {
-    let result = []
+    const result = []
     const keywordsString = keywords.join(' ')
     // ======================================/
-    // Search_feature V2
+    // Search_feature V1
     // ======================================/
-    result = listReceipts.filter(item => formatString(item.name).includes(keywordsString) && keywordsString.length >= 3)
+    for (const receipt of listReceipts) {
+      if (formatString(receipt.name).includes(keywordsString)) {
+        result.push(receipt)
+      }
+    }
 
     return result
   }
@@ -158,12 +169,16 @@ export default class Search {
    * @returns {Receipt[]}
    */
   _searchByDescription (keywords, listReceipts) {
-    let result = []
+    const result = []
     const keywordsString = keywords.join(' ')
     // ======================================/
-    // Search_feature V2
+    // Search_feature V1
     // ======================================/
-    result = listReceipts.filter(item => formatString(item.description).includes(keywordsString) && keywordsString.length >= 3)
+    for (const receipt of listReceipts) {
+      if (formatString(receipt.description).includes(keywordsString)) {
+        result.push(receipt)
+      }
+    }
 
     return result
   }
@@ -174,13 +189,19 @@ export default class Search {
    * @returns {Receipt[]}
    */
   _searchByIngredients (keywords, listReceipts) {
-    let result = []
+    const result = []
     // ======================================/
-    // Search_feature V2
+    // Search_feature V1
     // ======================================/
-    keywords.forEach(keyword => {
-      result = listReceipts.filter(item => item.keywordsIngredients.includes(formatString(keyword)) && keyword.length >= 3)
-    })
+    for (const keyword of keywords) {
+      for (const receipt of listReceipts) {
+        for (const ingredient of receipt.keywordsIngredients) {
+          if (ingredient.includes(keyword) && keyword.length >= 3) {
+            result.push(receipt)
+          }
+        }
+      }
+    }
 
     return result
   }
@@ -191,12 +212,16 @@ export default class Search {
    * @returns {Receipt[]}
    */
   _searchByAppliance (keywords, listReceipts) {
-    let result = []
+    const result = []
     const keywordsString = keywords.join(' ')
     // ======================================/
-    // Search_feature V2
+    // Search_feature V1
     // ======================================/
-    result = listReceipts.filter(item => formatString(item.appliance).includes(formatString(keywordsString)) && keywordsString.length >= 3)
+    for (const receipt of listReceipts) {
+      if (formatString(receipt.appliance).includes(keywordsString)) {
+        result.push(receipt)
+      }
+    }
 
     return result
   }
@@ -209,9 +234,8 @@ export default class Search {
   _searchByUstensils (keywords, listReceipts) {
     const result = []
     // ======================================/
-    // Search_feature V2
+    // Search_feature V1
     // ======================================/
-
     for (const keyword of keywords) {
       for (const receipt of listReceipts) {
         for (const ustensil of receipt.keywordsUstensils) {
