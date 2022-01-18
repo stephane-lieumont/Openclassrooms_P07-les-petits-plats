@@ -118,10 +118,19 @@ export default class Search {
       listUstensils = listUstensils.concat(receipt.ustensils)
 
       // Remove tags selected on listItem
+      // Remove tags selected on listItem
       for (const tag of this._tag.listTags) {
-        listAppliances.splice(listAppliances.indexOf(tag.value), 1)
-        listIngredients.splice(listIngredients.indexOf(tag.value), 1)
-        listUstensils.splice(listUstensils.indexOf(tag.value), 1)
+        switch (tag.category) {
+          case 'ingredients':
+            listIngredients.splice(listIngredients.indexOf(tag.value), 1)
+            break
+          case 'ustensils':
+            listUstensils.splice(listUstensils.indexOf(tag.value), 1)
+            break
+          case 'appliances':
+            listAppliances.splice(listAppliances.indexOf(tag.value), 1)
+            break
+        }
       }
     }
 
