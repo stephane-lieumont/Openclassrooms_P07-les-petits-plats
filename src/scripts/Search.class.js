@@ -54,8 +54,8 @@ export default class Search {
    * @param {Receipt[]} listReceipt
    */
   displayResult (listReceipts) {
-    this._receipts.createHTMLContent(listReceipts)
     this.updateFiltersList(listReceipts)
+    this._receipts.createHTMLContent(listReceipts)
     this._tagEventInit()
   }
 
