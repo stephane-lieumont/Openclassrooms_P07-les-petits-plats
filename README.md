@@ -37,7 +37,7 @@ npm run prod
 
 [search_native](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/search_feature_v1)  
 [search_fonctional](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/search_feature_v2)  
-[Investigation](benchmark/investigation.md)
+[Investigation](https://github.com/StephaneLi/StephaneLieumont_7_07012022/blob/master/benchmark/investtigation.md)
 
 ## Contribution
 Deux branches sont utilisées pour les deux algorythmes different  
