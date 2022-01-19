@@ -97,12 +97,17 @@ Le principe est de faire une boucle **for** sur chaque mot clé pour rechercher 
 Le principe est de faire une boucle **forEach** sur chaque mot clé pour rechercher une correspondance sur le titre, la description, les ingrédients, les appareils et les ustensiles. La méthode **filter** sur chaque recette renvois une correspondance et l’ajoute au tableau de résultat. Chaque tag sont considérés comme des mots clés et sont prioritaires sur le résultat de la recherche.
 
 *(figure 1 - 3)*
-
+  
 **Figure 1 - Algorigramme**  
+  
 ![figure1](src/figure1.jpeg)  
-**Figure 2 - Algorigramme**  
+  
+**Figure 2 - Algorigramme** 
+  
 ![figure2](src/figure2.jpeg)  
+  
 **Figure 3 - Algorigramme**  
+  
 ![figure3](src/figure3.jpeg)  
 
 #### **Paramètres de recherche avec 3 cas d’utilisation**
