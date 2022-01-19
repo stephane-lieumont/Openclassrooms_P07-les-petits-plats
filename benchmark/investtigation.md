@@ -38,8 +38,7 @@ Utilise les boucles forEach pour chaque mot clé renseigné dans le champ. Un fi
 ## Annexes 
 ### **Exemple : Data d’une recette**
 Les recettes sont stockées dans une variable **receipts** dans laquelle on trouve 50 recettes.
-
-```
+```js
   {
     id: 1,
     name: 'Limonade de Coco',
@@ -74,7 +73,7 @@ Les recettes sont stockées dans une variable **receipts** dans laquelle on trou
 
 La fonction **formatString** permet de supprimer les accents et de mettre tous les caractères en minuscules. Le but est de proposer un résultat même si l’utilisateur oublie les accents ou s’il ne saisit aucune majuscule.
 
-```
+```js
 /** Function to lowercase and delete accents */
 function formatString (string) {
   let formatString = string.toLowerCase();
@@ -100,15 +99,15 @@ Le principe est de faire une boucle **forEach** sur chaque mot clé pour recherc
 *(figure 1 - 3)*
 
 **Figure 1 - Algorigramme**  
-![figure1](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/investigation_sheet/benchmark/src/figure1.jpeg)  
+![figure1](src/figure1.jpeg)  
 **Figure 2 - Algorigramme**  
-![figure2](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/investigation_sheet/benchmark/src/figure2.jpeg)  
+![figure2](src/figure2.jpeg)  
 **Figure 3 - Algorigramme**  
-![figure3](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/investigation_sheet/benchmark/src/figure3.jpeg)  
+![figure3](src/figure3.jpeg)  
 
 #### **Paramètres de recherche avec 3 cas d’utilisation**
 **1er cas d’utilisation** : on renseigne le champ de recherche sans tag
-```
+```js
 /** Search Parameters */
 const searchParams = {
   receipts: receipts,
@@ -117,7 +116,7 @@ const searchParams = {
 };
 ```
 **2ème cas d’utilisation** : le champ de recherche est vide et un tag est sélectionné
-```
+```js
 /** Search Parameters */
 const searchParams = {
   receipts: receipts,
@@ -129,7 +128,7 @@ const searchParams = {
 };
 ```
 **3ème cas d’utilisation** : le champ de recherche est renseigné avec un tag sélectionné
-```
+```js
 /** Search Parameters */
 const searchParams = {
   receipts: receipts,
@@ -155,14 +154,14 @@ J’ai effectué des tests pour les 3 cas d’usage de la recherche avancée. La
 Pour les tests avec la fonction **formatString** on remarque une nette différence de **13.06%** de performance entre l’algorithme en boucle native et l’algorithme fonctionnel. Sans cette fonction on passe à une différence mineure de **5.79%** de performances. Cependant **l’algorithme de l’option 1 est plus performant** avec ou sans la fonction.
 
 **CAS N1**  
-![](src/Apose.Words.13ad71f6-c575-4b66-9a7e-4e67450f19d0.006.png)
+![test1](Screenshot/CASN1.png)  
 **CAS N2**  
-![](src/Apose.Words.13ad71f6-c575-4b66-9a7e-4e67450f19d0.007.png)
+![test2](Screenshot/CASN2.png)  
 **CAS N3**  
-![](src/Apose.Words.13ad71f6-c575-4b66-9a7e-4e67450f19d0.008.png)
+![test3](Screenshot/CASN3.png)  
 **CAS N1 (sans fonction formatString)**  
-![](src/Apose.Words.13ad71f6-c575-4b66-9a7e-4e67450f19d0.009.png)
-**CAS N2 (sans fonction formatString)**  
-![](src/Apose.Words.13ad71f6-c575-4b66-9a7e-4e67450f19d0.010.png)
-**CAS N3 (sans fonction formatString)**  
-![](src/Apose.Words.13ad71f6-c575-4b66-9a7e-4e67450f19d0.011.png)
+![test4](Screenshot/CASN1_withoutFormat.png)  
+**CAS N2 (sans fonction formatString)**   
+![test5](Screenshot/CASN2_withoutFormat.png)  
+**CAS N3 (sans fonction formatString)**    
+![test6](Screenshot/CASN3_withoutFormat.png)  
