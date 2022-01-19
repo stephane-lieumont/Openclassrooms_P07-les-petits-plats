@@ -1,4 +1,4 @@
-![](src/Apose.Words.13ad71f6-c575-4b66-9a7e-4e67450f19d0.001.png)![](src/Apose.Words.13ad71f6-c575-4b66-9a7e-4e67450f19d0.002.png)
+![logo](src/logo.png)
 # Fiche d’investigation de fonctionnalité
 **Problématique :** 
 Deux approches différentes pour l’algorithme de recherche. Une approche native avec boucle **for**, et une approche fonctionnelle avec les méthodes **filter** et **forEach**. Il faut trouver l’algorithme la plus rapide entre les deux approches.
@@ -99,12 +99,12 @@ Le principe est de faire une boucle **forEach** sur chaque mot clé pour recherc
 
 *(figure 1 - 3)*
 
-Figure 1 - Algorigramme  
-![figure1](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/investigation_sheet/benchmark/src/Apose.Words.13ad71f6-c575-4b66-9a7e-4e67450f19d0.003.jpeg)
-Figure 2 - Algorigramme  
-![figure2](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/investigation_sheet/benchmark/src/Apose.Words.13ad71f6-c575-4b66-9a7e-4e67450f19d0.004.jpeg)
-Figure 3 - Algorigramme  
-![figure3](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/investigation_sheet/benchmark/src/Apose.Words.13ad71f6-c575-4b66-9a7e-4e67450f19d0.005.jpeg)
+**Figure 1 - Algorigramme**  
+![figure1](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/investigation_sheet/benchmark/src/figure1.jpeg)  
+**Figure 2 - Algorigramme**  
+![figure2](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/investigation_sheet/benchmark/src/figure2.jpeg)  
+**Figure 3 - Algorigramme**  
+![figure3](https://github.com/StephaneLi/StephaneLieumont_7_07012022/tree/investigation_sheet/benchmark/src/figure3.jpeg)  
 
 #### **Paramètres de recherche avec 3 cas d’utilisation**
 **1er cas d’utilisation** : on renseigne le champ de recherche sans tag
